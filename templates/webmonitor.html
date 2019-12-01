@@ -1,210 +1,165 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <meta content="FASTory Monitoring Client" name="description">
-    <meta content="Jan Gerber, Radim Karnis, Bernhard Mayrhofer" name="author">
 
-    <title>Web UI monitoring </title>
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Industrial informatics project">
+    <meta name="keywords" content="industrial informatics, python, conveyor, robot">
+    <meta name="author" content="Bilal, Abbasi, Radek Hlavaty, Timothy Vanco">
+    <meta name="copyright" content="© 2019, Bilal, Abbasi, Radek Hlavaty, Timothy Vanco. All rights reserved.">
+    <meta name="robots" content="index, follow">
+    <meta name="subject" content="Industrial informatics" />
+    <meta name="abstract" content="Industrial informatics project" />
+    <meta name="rating" content="General" />
+
+    <link href="pictures/apple-touch-icon.png" rel="icon" type="image/png">
+	<title>WEB UI monitoring - Industrial Informatics project</title>
+
+    <!--
+    ?????
+    <![endif]-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-    <script crossorigin="anonymous"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <style>
-        .row-whith-wide-cards .card {
-            width: 100%;
-        }
-    </style>
+  <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+  <script crossorigin="anonymous"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="padding-top: 56px">
 
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">FASTory Monitoring</a>
-        <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler"
-                data-target="#navbarResponsive" data-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/webmonitor">Events
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+<nav class="navbar navbar-light bg-info fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Monitoring part</a>
+
+      <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarResponsive" data-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/webmonitor">Events
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
+<div class="container2">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12">
+      <h1 class="title">Web UI Monitoring Client</h1>
+    </div>
+    <div class="card sm-12 md-12 lg-12">
+      <div class="card-header">
+        Current Status - Robot & Conveyor
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item">Zone 1: </li>
+          <li class="list-group-item">Zone 2: </li>
+          <li class="list-group-item">Zone 3: </li>
+          <li class="list-group-item">Zone 4: </li>
+          <li class="list-group-item">Zone 5: </li>
+          <li class="list-group-item">Robot: </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<div class="container">
-    <div class="row mt-4">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    Current Status Robot and Conveyor
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Last Update</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">Zone 1</th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Zone 2</th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Zone 3</th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Zone 4</th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Zone 5</th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Robot</th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+  <div class="row" style="margin-top: 10px">
+    <div class="card sm-12 md-12 lg-12">
+      <div class="card-header">
+        Events
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Event ID</th>
+            <th scope="col">State</th>
+            <th scope="col">Server Time</th>
+          </tr>
+          </thead>
+          <tbody id="eventData">
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    Events
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Event ID</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Server Time</th>
-                        </tr>
-                        </thead>
-                        <tbody id="eventData">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    Alarms
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Server Time</th>
-                        </tr>
-                        </thead>
-                        <tbody id="alarmData">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
+
+
+
+
+
+
+
+
 <script>
-    let currentAlarmId = 0;
+
 
     function getAllEvents() {
         console.log("get state routine...");
 
-        $.get("/rest/events", function (data) {
-            let events = JSON.parse(data);
-            console.log(events);
-            txt = "";
-            for (x in events) {
-                let date = new Date(events[x][5]);
-                txt += "<tr>";
-                txt += "<th scope=\"row\">" + events[x][0] + "</th>";
-                txt += "<td>" + events[x][1] + "</td>";
-                txt += "<td>" + events[x][4] + "</td>";
-                txt += "<td>" + date.toISOString() + "</td>";
-                txt += "</tr>"
-            }
-            document.getElementById("eventData").innerHTML = txt;
+      $.get("/rest/events", function (data) {
+        let events = JSON.parse(data);
+        console.log(events);
+        txt = "";
+        for (x in events) {
+          let date = new Date(events[x][5]);
+          txt += "<tr>";
+          txt += "<th scope=\"row\">" + events[x][0] + "</th>";
+          txt += "<td>" + events[x][1] + "</td>";
+          txt += "<td>" + events[x][4] + "</td>";
+          txt += "<td>" + date.toISOString() + "</td>";
+          txt += "</tr>"
+        }
 
-        });
-    }
-
-    function getAllAlarms() {
-        console.log("get state routine...");
-
-        $.get("/rest/alarm", function (data) {
-            let alarms = JSON.parse(data);
-            console.log(alarms);
-            txt = "";
-            for (x in alarms) {
-                let date = new Date(alarms[x][3]);
-                txt += "<tr>";
-                txt += "<th scope=\"row\">" + alarms[x][0] + "</th>";
-                txt += "<td>" + alarms[x][1] + "</td>";
-                txt += "<td>" + alarms[x][2] + "</td>";
-                txt += "<td>" + date.toISOString() + "</td>";
-                txt += "</tr>"
-            }
-            document.getElementById("alarmData").innerHTML = txt;
-
+        document.getElementById("eventData").innerHTML = txt;
         });
     }
 
     function getCurrentStatus() {
-        console.log("get state routine...");
+      console.log("get state routine...");
 
-        $.get("/rest/ws/status", function (data) {
-            let statusWS = JSON.parse(data)
+      $.get("/rest/ws/status", function (data) {
+        let statusWS = JSON.parse(data)
 
-        });
+      });
     }
 
 
     window.setInterval(function () {
         getAllEvents();
-        getCurrentStatus();
-        getAllAlarms();
-    }, 2000);
+      getCurrentStatus();
+    }, 1000);
 
 
 </script>
