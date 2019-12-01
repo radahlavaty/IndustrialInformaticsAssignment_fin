@@ -13,8 +13,8 @@ from industrial_informatic_assigment.orchestration.orchestrator_status import Or
 from industrial_informatic_assigment.workstation.subsciber import Subscriber
 from industrial_informatic_assigment.workstation.workstation import Workstation
 
-logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S')
+#logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s',
+#                    datefmt='%Y-%m-%d %H:%M:%S')
 
 # Workstations
 w2BaseUrl = "http://192.168.2"

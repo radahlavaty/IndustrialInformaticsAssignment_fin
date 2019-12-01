@@ -23,16 +23,11 @@ class Orchestrator:
 
     def runOrchestration(self):
         while True:
-            try:
-                self.testNextStepInZone1()
-                self.testNextStepInZone2()
-                self.testNextStepInZone3()
-                self.testNextStepInZone4()
-                self.printPalletInfos()
-                self.testForWorking()
-            except WorkstationError as e:
-                self.status.changeColor(StatusCode.ERROR)
-                print("Orchestrator: Something went wrong")
+            self.testNextStepInZone1()
+            self.testNextStepInZone2()
+            self.testNextStepInZone3()
+            self.testNextStepInZone4()
+            self.printPalletInfos()
             time.sleep(5)
 
     def addNewOrder(self, phone: Phone):
@@ -79,11 +74,9 @@ class Orchestrator:
 
     def drawingEndEvent(self):
         pallet = self.getPalletOnByStatus(PalletStatus.DRAWING)
-
         if not pallet.frameDone or not pallet.screenDone or not pallet.keyboardDone:
             pallet.status = PalletStatus.WAITING
             return
-
         pallet.status = PalletStatus.WAIT_FOR_MOVING
 
     def zone1ChangedEvent(self, palletId: int):
@@ -165,22 +158,14 @@ class Orchestrator:
         if not self.testIfAnyPalletIsInZone(Zone.Z2) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z2):
             print("Orchestrator: move pallet from zone 1 to zone 2")
             pallet.status = PalletStatus.MOVING_TO_Z2
-            try:
-                self.ws.conveyor.movePallet(Zone.Z1, Zone.Z2)
-            except WorkstationError as e:
-                pallet.status = PalletStatus.WAIT_FOR_MOVING
-                raise WorkstationError(e)
+            self.ws.conveyor.movePallet(Zone.Z1, Zone.Z2)
             return
         if len(self.bufferOrder) == 0:
             return
         if not self.testIfAnyPalletIsInZone(Zone.Z4) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z4):
             print("Orchestrator: move pallet from zone 1 to zone 4")
             pallet.status = PalletStatus.MOVING_TO_Z4
-            try:
-                self.ws.conveyor.movePallet(Zone.Z1, Zone.Z4)
-            except WorkstationError as e:
-                pallet.status = PalletStatus.WAIT_FOR_MOVING
-                raise WorkstationError(e)
+            self.ws.conveyor.movePallet(Zone.Z1, Zone.Z4)
 
     def testNextStepInZone2(self):
         if not self.testIfAnyPalletIsInZone(Zone.Z2):
@@ -193,21 +178,13 @@ class Orchestrator:
             if color != pallet.phone.color:
                 print("Orchestrator: change pen")
                 pallet.status = PalletStatus.WAIT_PEN_CHANGE
-                try:
-                    self.ws.robot.selectPen(pallet.phone.color)
-                except WorkstationError as e:
-                    pallet.status = PalletStatus.WAIT_FOR_MOVING
-                    raise WorkstationError(e)
+                self.ws.robot.selectPen(pallet.phone.color)
             else:
                 pallet.status = PalletStatus.WAIT_FOR_MOVING
         if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfAnyPalletIsInZone(Zone.Z3):
             print("Orchestrator: move pallet from zone 2 to zone 3")
             self.ws.conveyor.movePallet(Zone.Z2, Zone.Z3)
-            try:
-                pallet.status = PalletStatus.MOVING_TO_Z3
-            except WorkstationError as e:
-                pallet.status = PalletStatus.WAIT_FOR_MOVING
-                raise WorkstationError(e)
+            pallet.status = PalletStatus.MOVING_TO_Z3
 
     def testNextStepInZone3(self):
         if not self.testIfAnyPalletIsInZone(Zone.Z3):
@@ -218,38 +195,22 @@ class Orchestrator:
         if pallet.status == PalletStatus.WAITING:
             if not pallet.frameDone:
                 pallet.status = PalletStatus.DRAWING
-                try:
-                    self.ws.robot.executeDrawing(pallet.phone.frameShape, pallet.phone.color)
-                except WorkstationError as e:
-                    pallet.status = PalletStatus.WAITING
-                    raise WorkstationError(e)
+                self.ws.robot.executeDrawing(pallet.phone.frameShape, pallet.phone.color)
                 pallet.frameDone = True
             elif not pallet.screenDone:
                 pallet.status = PalletStatus.DRAWING
-                try:
-                    self.ws.robot.executeDrawing(pallet.phone.screenShape, pallet.phone.color)
-                except WorkstationError as e:
-                    pallet.status = PalletStatus.WAITING
-                    raise WorkstationError(e)
+                self.ws.robot.executeDrawing(pallet.phone.screenShape, pallet.phone.color)
                 pallet.screenDone = True
             elif not pallet.keyboardDone:
                 pallet.status = PalletStatus.DRAWING
-                try:
-                    self.ws.robot.executeDrawing(pallet.phone.keyboardShape, pallet.phone.color)
-                except WorkstationError as e:
-                    pallet.status = PalletStatus.WAITING
-                    raise WorkstationError(e)
+                self.ws.robot.executeDrawing(pallet.phone.keyboardShape, pallet.phone.color)
                 pallet.keyboardDone = True
             return
         if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfAnyPalletIsInZone(
                 Zone.Z5) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z5):
             print("Orchestrator: move pallet from zone 3 to zone 5")
             pallet.status = PalletStatus.MOVING_TO_Z5
-            try:
-                self.ws.conveyor.movePallet(Zone.Z3, Zone.Z5)
-            except WorkstationError as e:
-                pallet.status = PalletStatus.WAIT_FOR_MOVING
-                raise WorkstationError(e)
+            self.ws.conveyor.movePallet(Zone.Z3, Zone.Z5)
 
     def testNextStepInZone4(self):
         if not self.testIfAnyPalletIsInZone(Zone.Z4):
@@ -259,24 +220,20 @@ class Orchestrator:
             return
         if not self.testIfAnyPalletIsInZone(Zone.Z5) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z5):
             pallet.status = PalletStatus.MOVING_TO_Z5
-            try:
-                self.ws.conveyor.movePallet(Zone.Z4, Zone.Z5)
-            except WorkstationError as e:
-                pallet.status = PalletStatus.WAIT_FOR_MOVING
-                raise WorkstationError(e)
+            self.ws.conveyor.movePallet(Zone.Z4, Zone.Z5)
 
     def testNextStepInZone5(self):
         if not self.testIfAnyPalletIsInZone(Zone.Z5):
             return
 
     def printPalletInfos(self):
-        print("---------------------- Pallets in WS ----------------------")
+        logging.info("---------------------- Pallets in WS ----------------------")
         for p in self.ws.pallets:
             p.printPalletInfo()
 
-    def testForWorking(self):
-        for p in self.ws.pallets:
-            if p.status is PalletStatus.WAIT_PEN_CHANGE or p.status is PalletStatus.MOVING_TO_Z2 or p.status is PalletStatus.MOVING_TO_Z3 or p.status is PalletStatus.MOVING_TO_Z4 or p.status is PalletStatus.MOVING_TO_Z5 or p.status is PalletStatus.DRAWING:
-                self.status.changeColor(StatusCode.WORKING)
-                return
-        self.status.changeColor(StatusCode.IDLE)
+    # def testForWorking(self):
+    #     for p in self.ws.pallets:
+    #         if p.status is PalletStatus.WAIT_PEN_CHANGE or p.status is PalletStatus.MOVING_TO_Z2 or p.status is PalletStatus.MOVING_TO_Z3 or p.status is PalletStatus.MOVING_TO_Z4 or p.status is PalletStatus.MOVING_TO_Z5 or p.status is PalletStatus.DRAWING:
+    #             self.status.changeColor(StatusCode.WORKING)
+    #             return
+    #     self.status.changeColor(StatusCode.IDLE)
