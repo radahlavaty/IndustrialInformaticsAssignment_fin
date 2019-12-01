@@ -32,25 +32,24 @@ class Orchestrator:
                 self.testForWorking()
             except WorkstationError as e:
                 self.status.changeColor(StatusCode.ERROR)
-                logging.error("Orchestrator: Something went wrong")
-                logging.error(e)
+                print("Orchestrator: Something went wrong")
             time.sleep(5)
 
     def addNewOrder(self, phone: Phone):
-        logging.info("Orchestrator: new phone added to order list")
+        print("Orchestrator: new phone added to order list")
         if self.ws.conveyor.getZoneStatus(Zone.Z1) == -1:
-            logging.debug("Orchestrator: add to buffer 1")
+            print("Orchestrator: add to buffer 1")
             self.addOrderToBuffer(phone)
         elif self.testIfAnyPalletIsInZone(Zone.Z1):
-            logging.debug("Orchestrator: add to buffer 1")
+            print("Orchestrator: add to buffer 1")
             self.addOrderToBuffer(phone)
         else:
-            logging.debug("Orchestrator: add to pallet")
+            print("Orchestrator: add to pallet")
             self.addPhoneToPallet(phone)
 
     def addOrderToBuffer(self, phone: Phone):
         if len(self.bufferOrder) >= 2:
-            logging.info("Orchestrator: max number of orders are already reached")
+            print("Orchestrator: max number of orders are already reached")
             return
         self.bufferOrder.append(phone)
 
@@ -75,7 +74,7 @@ class Orchestrator:
 
     def addPalletToWS(self, pallet):
         if len(self.ws.pallets) >= 5:
-            logging.warning("Orchestrator: there are already 5 pallets in the ws")
+            print("Orchestrator: there are already 5 pallets in the ws")
         self.ws.pallets.append(pallet)
 
     def drawingEndEvent(self):
@@ -128,7 +127,7 @@ class Orchestrator:
             if pallet is None:
                 return
             self.ws.pallets.remove(pallet)
-            logging.debug("Orchestrator: remove Pallet")
+            print("Orchestrator: remove Pallet")
             return
         pallet = self.getPalletOnByStatus(PalletStatus.MOVING_TO_Z5)
         if pallet is None:
@@ -146,13 +145,13 @@ class Orchestrator:
         for pallet in self.ws.pallets:
             if pallet.locationZone == zone:
                 return pallet
-        logging.error("Orchestrator: couldn't find pallet on zone: " + str(zone.name))
+        print("Orchestrator: couldn't find pallet on zone: " + str(zone.name))
 
     def getPalletOnByStatus(self, status: PalletStatus):
         for pallet in self.ws.pallets:
             if pallet.status == status:
                 return pallet
-        logging.error("Orchestrator: couldn't find pallet with that status: " + str(status.name))
+        print("Orchestrator: couldn't find pallet with that status: " + str(status.name))
 
     def drawingStartEvent(self):
         pass
@@ -164,7 +163,7 @@ class Orchestrator:
         if pallet.status == PalletStatus.MOVING_TO_Z2:
             return
         if not self.testIfAnyPalletIsInZone(Zone.Z2) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z2):
-            logging.info("Orchestrator: move pallet from zone 1 to zone 2")
+            print("Orchestrator: move pallet from zone 1 to zone 2")
             pallet.status = PalletStatus.MOVING_TO_Z2
             try:
                 self.ws.conveyor.movePallet(Zone.Z1, Zone.Z2)
@@ -175,7 +174,7 @@ class Orchestrator:
         if len(self.bufferOrder) == 0:
             return
         if not self.testIfAnyPalletIsInZone(Zone.Z4) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z4):
-            logging.info("Orchestrator: move pallet from zone 1 to zone 4")
+            print("Orchestrator: move pallet from zone 1 to zone 4")
             pallet.status = PalletStatus.MOVING_TO_Z4
             try:
                 self.ws.conveyor.movePallet(Zone.Z1, Zone.Z4)
@@ -192,7 +191,7 @@ class Orchestrator:
         if pallet.status == PalletStatus.WAITING and not self.testIfAnyPalletIsInZone(Zone.Z3):
             color = self.ws.robot.getPenColor()
             if color != pallet.phone.color:
-                logging.info("Orchestrator: change pen")
+                print("Orchestrator: change pen")
                 pallet.status = PalletStatus.WAIT_PEN_CHANGE
                 try:
                     self.ws.robot.selectPen(pallet.phone.color)
@@ -202,7 +201,7 @@ class Orchestrator:
             else:
                 pallet.status = PalletStatus.WAIT_FOR_MOVING
         if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfAnyPalletIsInZone(Zone.Z3):
-            logging.info("Orchestrator: move pallet from zone 2 to zone 3")
+            print("Orchestrator: move pallet from zone 2 to zone 3")
             self.ws.conveyor.movePallet(Zone.Z2, Zone.Z3)
             try:
                 pallet.status = PalletStatus.MOVING_TO_Z3
@@ -244,7 +243,7 @@ class Orchestrator:
             return
         if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfAnyPalletIsInZone(
                 Zone.Z5) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z5):
-            logging.info("Orchestrator: move pallet from zone 3 to zone 5")
+            print("Orchestrator: move pallet from zone 3 to zone 5")
             pallet.status = PalletStatus.MOVING_TO_Z5
             try:
                 self.ws.conveyor.movePallet(Zone.Z3, Zone.Z5)
@@ -271,7 +270,7 @@ class Orchestrator:
             return
 
     def printPalletInfos(self):
-        logging.info("---------------------- Pallets in WS ----------------------")
+        print("---------------------- Pallets in WS ----------------------")
         for p in self.ws.pallets:
             p.printPalletInfo()
 

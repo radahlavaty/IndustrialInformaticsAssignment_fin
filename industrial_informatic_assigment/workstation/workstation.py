@@ -7,7 +7,6 @@ class Workstation:
 
     def __init__(self, baseIp, nextWS):
         self.workstationID = uuid.uuid4()       # generate new ID
-
         self.robot = Robot(baseIp + ".1")
         self.conveyor = Conveyor(baseIp + ".2")
         self.pallets = []

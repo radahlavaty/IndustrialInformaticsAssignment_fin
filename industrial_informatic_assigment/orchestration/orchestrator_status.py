@@ -12,7 +12,7 @@ class OrchestratorStatus:
         self.changeColor(self.status)
 
     def blink(self):
-        logging.debug("Thread: Status Code Routine Started")
+        print("Thread: Status Code Routine Started")
         while True:
             if self.status == StatusCode.WORKING:  # green blinking
                 explorerhat.light[3].on()
