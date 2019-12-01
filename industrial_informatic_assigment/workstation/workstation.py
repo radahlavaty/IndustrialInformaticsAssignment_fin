@@ -5,13 +5,13 @@ from industrial_informatic_assigment.workstation.robot import Robot
 
 class Workstation:
 
-    def __init__(self, baseIp):
+    def __init__(self, baseIp, nextWS):
         self.workstationID = uuid.uuid4()       # generate new ID
         self.robot = Robot(baseIp + ".1")
         self.conveyor = Conveyor(baseIp + ".2")
         self.pallets = []
         self.baseIp = baseIp
-
+        self.nextWS = nextWS
         print("Initialization: new workstation  (" + str(self.workstationID) + ")")
 
     def addPallet(self, pallet):

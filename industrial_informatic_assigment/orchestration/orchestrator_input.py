@@ -1,4 +1,4 @@
-import logging
+
 import time
 
 import explorerhat
@@ -17,12 +17,11 @@ class OrchestratorInput:
         self.state = 0
         self.selected = False
         self.orchestrator = orchestrator
-        self.okButton = 3
+        self.okButton = 1
 
     def startListening(self):
         explorerhat.touch.pressed(self.changeState)
-        print("Waiting for button actions")
-        #lights
+        print("Listening to button inputs started")
         while True:
             if self.state == 0:
                 explorerhat.light[0].off()
@@ -41,95 +40,83 @@ class OrchestratorInput:
                 explorerhat.light[0].off()
                 time.sleep(0.6)
 
-    def changeState(self, button):
-        print("Button pressed: " + str(button))
+    def changeState(self, channel, event):
+        print("OrchestratorInput: Button pressed: " + str(channel))
         if self.state == 0:
-            if button == self.okButton:
+            if channel == self.okButton:
                 self.state = 1
         elif self.state == 1:
-            self.state1(button)
+            self.state1(channel)
         elif self.state == 2:
-            self.state2(button)
+            self.state2(channel)
         elif self.state == 3:
-            self.state3(button)
+            self.state3(channel)
         elif self.state == 4:
-            self.state4(button)
+            self.state4(channel)
         elif self.state == 5:
-            if button == self.okButton:
-                logging.debug("OrchestratorInput: Phone")
-                self.phone.printPhone()
-                self.orchestrator.addNewOrder(self.phone) #TODO
+            if channel == self.okButton:
+                print("OrchestratorInput: Phone")
+                self.phone.printPhoneInfo()
+                self.orchestrator.addNewOrder(self.phone)
                 self.state = 0
 
-    def state1(self, button):
-        print("Select frame shape")
-        if button == self.okButton and self.selected:
+    def state1(self, channel):
+        print("OrchestratorInput: select frame shape")
+        if channel == self.okButton and self.selected:
             self.state = 2
             self.selected = False
-        elif button == 0:
-            print('FRAME_1 selected')
+        elif channel == 2:
             self.phone.frameShape = PhoneShape.FRAME_1
             self.selected = True
-        elif button == 1:
-            print('FRAME_2 selected')
+        elif channel == 3:
             self.phone.frameShape = PhoneShape.FRAME_2
             self.selected = True
-        elif button == 2:
-            print('FRAME_3 selected')
+        elif channel == 4:
             self.phone.frameShape = PhoneShape.FRAME_3
             self.selected = True
 
-    def state2(self, button):
-        print("OSelect screen shape")
-        if button == self.okButton and self.selected:
+    def state2(self, channel):
+        print("OrchestratorInput: select screen shape")
+        if channel == self.okButton and self.selected:
             self.state = 3
             self.selected = False
-        elif button == 0:
-            print('SCREEN_1 selected')
+        elif channel == 2:
             self.phone.screenShape = PhoneShape.SCREEN_1
             self.selected = True
-        elif button == 1:
-            print('SCREEN_2 selected')
+        elif channel == 3:
             self.phone.screenShape = PhoneShape.SCREEN_2
             self.selected = True
-        elif button == 2:
-            print('SCREEN_3 selected')
+        elif channel == 4:
             self.phone.screenShape = PhoneShape.SCREEN_3
             self.selected = True
 
-    def state3(self, button):
-        print("Select keyboard shape")
-        if button == self.okButton and self.selected:
+    def state3(self, channel):
+        print("OrchestratorInput: select keyboard shape")
+        if channel == self.okButton and self.selected:
             self.state = 4
             self.selected = False
-        elif button == 0:
-            print('KEYBOARD_1 selected')
+        elif channel == 2:
             self.phone.keyboardShape = PhoneShape.KEYBOARD_1
             self.selected = True
-        elif button == 1:
-            print('KEYBOARD_2 selected')
+        elif channel == 3:
             self.phone.keyboardShape = PhoneShape.KEYBOARD_2
             self.selected = True
-        elif button == 2:
-            print('KEYBOARD_3 selected')
+        elif channel == 4:
             self.phone.keyboardShape = PhoneShape.KEYBOARD_3
             self.selected = True
 
-    def state4(self, button):
-        print("Select phone color")
-        if button == self.okButton and self.selected:
+    def state4(self, channel):
+        print("OrchestratorInput: select phone color")
+        if channel == self.okButton and self.selected:
             self.state = 5
             self.selected = False
-        elif button == 0:
-            print('PhoneColor.RED selected')
+        elif channel == 2:
             self.phone.color = PhoneColor.RED
             self.selected = True
-        elif button == 1:
-            print('PhoneColor.GREEN selected')
+        elif channel == 3:
             self.phone.color = PhoneColor.GREEN
             self.selected = True
-        elif button == 2:
-            print('PhoneColor.BLUE selected')
+        elif channel == 4:
             self.phone.color = PhoneColor.BLUE
             self.selected = True
 

@@ -23,7 +23,7 @@ w2 = Workstation(w2BaseUrl, None)
 # Subscribers
 raspberryPiAddress = "http://192.168.0.114:5000"
 sub = Subscriber(raspberryPiAddress)
-#sub.subscribeToAllEventsOfWS(w2)
+sub.subscribeToAllEventsOfWS(w2)
 
 # Orchestration
 orchestratorStatus = OrchestratorStatus()
