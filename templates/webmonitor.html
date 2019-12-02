@@ -51,12 +51,14 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-info fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#">Monitoring part</a>
+    <h1 class="navbar-brand_top" href="#"> Monitoring part</h1>
 
+      <!--
       <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
             data-target="#navbarResponsive" data-toggle="collapse" type="button">
       <span class="navbar-toggler-icon"></span>
-    </button>
+      </button>
+      -->
 
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
@@ -75,10 +77,13 @@
     <div class="col-12 col-sm-12 col-md-12">
       <h1 class="title">Web UI Monitoring Client</h1>
     </div>
+
     <div class="card sm-12 md-12 lg-12">
+
       <div class="card-header">
         Current Status - Robot & Conveyor
       </div>
+
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item">Zone 1: </li>
@@ -91,14 +96,48 @@
       </div>
     </div>
   </div>
+    
+
+    <table id="tables1">
+        <thead>
+        </thead>
+        <tr>
+            <th>Current Status - Robot & Conveyor</th>
+        </tr>
+        <tr>
+            <td>Zone 1:</td>
+        </tr>
+        <tr>
+            <td>Zone 2:</td>
+        </tr>
+        <tr>
+            <td>Zone 3:</td>
+        </tr>
+        <tr>
+            <td>Zone 4:</td>
+        </tr>
+        <tr>
+            <td>Zone 5:</td>
+        </tr>
+        <tr>
+            <td>ROBOT:</td>
+        </tr>
+    </table>
+
+    
 
   <div class="row" style="margin-top: 10px">
     <div class="card sm-12 md-12 lg-12">
+        
       <div class="card-header">
         Events
       </div>
+        
       <div class="card-body">
+          
+          
         <table class="table">
+            
           <thead class="thead-light">
           <tr>
             <th scope="col">ID</th>
@@ -109,13 +148,33 @@
           </thead>
           <tbody id="eventData">
           </tbody>
+            
         </table>
+          
+          
       </div>
     </div>
   </div>
+
+    
+    <table id="tables2">
+        <thead>
+            <tr>
+                <th colspan="4">Events</th>
+            </tr>
+            <tr>
+                <td class="eventsData">ID</td>
+                <td class="eventsData">event ID</td>
+                <td class="eventsData">state</td>
+                <td class="eventsData">server time</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tbody id="eventData">
+        </tbody>
+    </table>
+
 </div>
-
-
 
 
 
@@ -151,7 +210,6 @@
 
       $.get("/rest/ws/status", function (data) {
         let statusWS = JSON.parse(data)
-
       });
     }
 
