@@ -1,6 +1,4 @@
-
 import time
-
 import explorerhat
 
 from industrial_informatic_assigment.orchestration.orchestrator_rpi import Orchestrator
@@ -12,8 +10,7 @@ from industrial_informatic_assigment.enum.phone_shape import PhoneShape
 class OrchestratorInput:
 
     def __init__(self, orchestrator: Orchestrator):
-        self.phone = Phone(PhoneShape.FRAME_1, PhoneShape.KEYBOARD_1,
-                           PhoneShape.SCREEN_1, PhoneColor.RED)
+        self.phone = Phone(PhoneShape.FRAME_1, PhoneShape.KEYBOARD_1, PhoneShape.SCREEN_1, PhoneColor.RED)
         self.state = 0
         self.selected = False
         self.orchestrator = orchestrator
@@ -57,7 +54,7 @@ class OrchestratorInput:
             if channel == self.okButton:
                 print("OrchestratorInput: Phone")
                 self.phone.printPhoneInfo()
-                self.orchestrator.addNewOrder(self.phone)
+                self.orchestrator.addOrder(self.phone)
                 self.state = 0
 
     def state1(self, channel):
