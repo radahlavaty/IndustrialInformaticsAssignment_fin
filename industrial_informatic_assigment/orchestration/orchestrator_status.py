@@ -2,7 +2,8 @@ import logging
 import time
 import explorerhat
 
-from industrial_informatic_assigment.enum.status_code import StatusCode
+#from industrial_informatic_assigment.enum.status_code import StatusCode
+from industrial_informatic_assigment.enum.enum_variables import StatusCode
 
 
 class OrchestratorStatus:

@@ -1,9 +1,11 @@
 import uuid
-from industrial_informatic_assigment.enum.pallet_status import PalletStatus
+
 from industrial_informatic_assigment.workstation.workstation import Workstation
 from industrial_informatic_assigment.workstation.phone import Phone
 from industrial_informatic_assigment.enum.zone import Zone
+#from industrial_informatic_assigment.enum.pallet_status import PalletStatus
 
+from industrial_informatic_assigment.enum.enum_variables import Zone, PalletStatus
 
 class Pallet:
 

@@ -1,7 +1,8 @@
 import uuid
 import requests
-from industrial_informatic_assigment.enum.zone import Zone
 
+#from industrial_informatic_assigment.enum.zone import Zone
+from industrial_informatic_assigment.enum.enum_variables import Zone
 
 class Conveyor:
 

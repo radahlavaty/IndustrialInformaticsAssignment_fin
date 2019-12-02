@@ -1,8 +1,10 @@
 import uuid
 import requests
-from industrial_informatic_assigment.enum.phone_color import PhoneColor
-from industrial_informatic_assigment.enum.phone_shape import PhoneShape
 
+#rom industrial_informatic_assigment.enum.phone_color import PhoneColor
+#from industrial_informatic_assigment.enum.phone_shape import PhoneShape
+
+from industrial_informatic_assigment.enum.enum_variables import PhoneShape, PhoneColor
 
 class Robot:
     def __init__(self, hostIP):

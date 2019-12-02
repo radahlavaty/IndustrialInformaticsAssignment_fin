@@ -1,5 +1,7 @@
-from industrial_informatic_assigment.enum.phone_color import PhoneColor
-from industrial_informatic_assigment.enum.phone_shape import PhoneShape
+#from industrial_informatic_assigment.enum.phone_color import PhoneColor
+#from industrial_informatic_assigment.enum.phone_shape import PhoneShape
+
+from industrial_informatic_assigment.enum.enum_variables import PhoneShape, PhoneColor
 
 
 class Phone:

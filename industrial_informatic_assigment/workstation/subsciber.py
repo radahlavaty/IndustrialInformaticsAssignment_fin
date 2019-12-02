@@ -1,7 +1,8 @@
 import requests
 from industrial_informatic_assigment.workstation.workstation import Workstation
-from industrial_informatic_assigment.enum.zone import Zone
+#from industrial_informatic_assigment.enum.zone import Zone
 
+from industrial_informatic_assigment.enum.enum_variables import Zone
 
 class Subscriber:
     def __init__(self, ownAdress):
