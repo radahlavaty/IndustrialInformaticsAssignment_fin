@@ -1,10 +1,7 @@
 import json
-import logging
 import threading
 
 from flask import Flask, request
-
-
 
 # Logging
 from industrial_informatic_assigment.orchestration.orchestrator_input import OrchestratorInput
@@ -12,9 +9,6 @@ from industrial_informatic_assigment.orchestration.orchestrator_rpi import Orche
 from industrial_informatic_assigment.orchestration.orchestrator_status import OrchestratorStatus
 from industrial_informatic_assigment.workstation.subsciber import Subscriber
 from industrial_informatic_assigment.workstation.workstation import Workstation
-
-#logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s',
-#                    datefmt='%Y-%m-%d %H:%M:%S')
 
 # Workstations
 w2BaseUrl = "http://192.168.2"
@@ -53,92 +47,92 @@ threadOrchestrationInput.start()
 
 # API Event Endpoints
 @app.route('/rest/events/ws/<string:wsId>/PenChangeEnd/info', methods=['POST'])
-def penSelectedEndEvent(wsId):
-    logging.debug("Event: Pen Selected End WS(" + wsId + ")")
+def penSelectEndEventAPI(wsId):
+    print("Event: Pen Selected End WS(" + wsId + ")")
     content = request.json
-    orchestrator.penSelectedEndEvent()
+    orchestrator.penSelectEndEvent()
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/PenChangeStart/info', methods=['POST'])
-def penSelectedStartEvent(wsId):
-    logging.debug("Event: Pen Selected Start WS(" + wsId + ")")
-    orchestrator.penSelectedStartEvent()
+def penSelectStartEventAPI(wsId):
+    print("Event: Pen Selected Start WS(" + wsId + ")")
+    orchestrator.penSelectStartEvent()
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/DrawStartExecution/info', methods=['POST'])
-def drawingStartEvent(wsId):
-    logging.debug("Event: Drawing Start WS(" + wsId + ")")
-    orchestrator.drawingStartEvent()
+def drawStartEventAPI(wsId):
+    print("Event: Drawing Start WS(" + wsId + ")")
+    orchestrator.drawStartEvent()
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/DrawEndExecution/info', methods=['POST'])
-def drawingEndEvent(wsId):
-    logging.debug("Event: Drawing End WS(" + wsId + ")")
-    orchestrator.drawingEndEvent()
+def drawEventAPI(wsId):
+    print("Event: Drawing End WS(" + wsId + ")")
+    orchestrator.drawEndEvent()
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/Z1_Changed/info', methods=['POST'])
-def zone1ChangedEvent(wsId):
-    logging.debug("Event: Zone 1 Changed WS(" + wsId + ")")
+def zone1EventAPI(wsId):
+    print("Event: Zone 1 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone1ChangedEvent(payload["PalletID"])
+    orchestrator.zone1Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/Z2_Changed/info', methods=['POST'])
-def zone2ChangedEvent(wsId):
-    logging.debug("Event: Zone 2 Changed WS(" + wsId + ")")
+def zone2EventAPI(wsId):
+    print("Event: Zone 2 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone2ChangedEvent(payload["PalletID"])
+    orchestrator.zone2Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/Z3_Changed/info', methods=['POST'])
-def zone3ChangedEvent(wsId):
-    logging.debug("Event: Zone 3 Changed WS(" + wsId + ")")
+def zone3EventAPI(wsId):
+    print("Event: Zone 3 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone3ChangedEvent(payload["PalletID"])
+    orchestrator.zone3Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/Z4_Changed/info', methods=['POST'])
-def zone4ChangedEvent(wsId):
-    logging.debug("Event: Zone 4 Changed WS(" + wsId + ")")
+def zone4EventAPI(wsId):
+    print("Event: Zone 4 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone4ChangedEvent(payload["PalletID"])
+    orchestrator.zone4Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
 @app.route('/rest/events/ws/<string:wsId>/Z5_Changed/info', methods=['POST'])
-def zone5ChangedEvent(wsId):
-    logging.debug("Event: Zone 5 Changed WS(" + wsId + ")")
+def zone5EventAPI(wsId):
+    print("Event: Zone 5 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone5ChangedEvent(payload["PalletID"])
+    orchestrator.zone5Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
