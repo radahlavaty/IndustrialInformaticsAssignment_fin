@@ -15,12 +15,10 @@ header {
     position: relative;
 }
 
-
 .title{
-    font-family: font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
 }
-
 
 .card-header{
     text-align: center;
@@ -134,26 +132,7 @@ b {
 
 
 
-.wrapper {
-    width: 100%;
-    padding-top: 20px;
-    color: #292d30;
-}
 
-
-.wrapper h2{
-    font-family: 'Timmana', sans-serif;
-    text-transform: uppercase;
-    /*font-family: Copperplate, 'Copperplate Gothic Light', fantasy;*/
-	font-size: 60px;
-	font-weight: 600;
-	line-height: 26px;
-    display: inline-block;
-    padding-bottom: 5px;
-    border-bottom: 5px solid black;
-    margin-right: 70px;
-    margin-bottom: 0px;
-}
 
 
 .row {
@@ -171,145 +150,21 @@ b {
     margin: 0 auto;
 }
 
-.date {
-    display: block;
-    line-height: 18px;
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.dateH {
-    display: inline-block;
-    line-height: 18px;
-    color: black;
-    font-size: 15px;
-    font-weight: 500;
-    margin-right: 10px;
-}
-
-.info {
-    display: block;
-    padding-right: 10%;
-    font-family: 'Raleway', sans-serif;
-    line-height: 23px;
-    color: #414141;
-    font-size: 20px;
-    margin-bottom: 20px;
-}
 
 
 
 
 
-.word {
-    color: #262626;
-    font-size: 40px;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-family: 'Timmana', sans-serif;
-    padding-right: 7px;
-    /*font-family: 'Lato', 'Helvetica Neue', Verdana, Geneva, sans-serif;*/
-
-}
-
-
-
-#offer h1 {
-    padding: 1em 0 0 0;
-    font-size: 60px;
-    text-align: center;
-    text-transform: uppercase;
-    /*font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
-    font-family: 'Timmana', sans-serif;
-    color: snow;
-    font-weight: 900;
-}
 
 
 
 
 
-.column2 {
-    display: block;
-    vertical-align: top;
-    height: 100%;
-    overflow: hidden;
-    margin: 0 auto;
-}
 
 
 
 
 
-.column2 ul li img {
-    width: 70px;
-    float: left;
-    vertical-align: middle;
-}
-
-#success ul li p{
-    margin-left: 90px;
-    padding-top: 17px;
-
-}
-
-.award {
-    font-weight: 900;
-    font-size: 30px;
-}
-
-.datee {
-    display: inline-block;
-    line-height: 25px;
-    color: black;
-    font-size: 20px;
-    font-weight: 500;
-}
-
-
-.roww {
-    width: 100%;
-    display: block;
-}
-
-.roww ul li img{
-    max-width: 300px;
-    margin: 10px 30px 10px 0px;
-    display: inline-block;
-    float: left;
-    vertical-align: top;
-    overflow: hidden;
-    border-radius: 1%;
-}
-
-
-
-
-
-.item {
-    display: inline-block;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-
-@media (max-height : 600px){
-    #oslovenie {padding-top: 130px;font-size: 80px;}
-}
-
-
-@media (max-height : 460px){
-    #oslovenie {padding-top: 70px;font-size: 70px;;}
-}
-
-@media (max-height : 350px){
-    #oslovenie {padding-top: 50px;font-size: 60px;;}
-}
-
-@media (max-height : 290px){
-    #oslovenie {padding-top: 25px;font-size: 40px;}
-}
 
 @media (min-width : 1025px) {
     header {height: 100vh;}
@@ -318,7 +173,7 @@ b {
 @media (max-width : 1024px) {
 
     b {font-size: 30px;}
-    b:hover {color: red;line-height: 1.1;font-weight: 1100;font-size: 40px;}
+    b:hover {color: red; line-height: 1.1; font-weight: 900; font-size: 40px;}
     #datum {font-weight: 200;font-size: 20px;}
     #zaujem {letter-spacing: 1.2px;margin: 30px 10%;padding: 0;line-height: 1.2;overflow: auto;}
     #widthHeading, #widthAbout, #widthOffer, #widthSuccess, #widthVision, #widthJarvis, #widthFreetime, #widthHelp, #widthContact {width: auto;margin: 0 5%;}
@@ -328,7 +183,7 @@ b {
     .wrapper h2{font-size: 45px;}
     #offer h1 {padding: 0.5em 0;font-size: 35px;}
     #offer ul{margin: 0;}
-    #succ {font-size: 60px;margin-bottom: 20px;margin-top: 20px;border: 4px solid gold;letter-spacing: 20px;}
+
     #success ul {margin: 0;font-size: 20px;}
     .column2 ul li img {width: 60px;}
     #success ul li p {margin-left: 70px;padding-top: 10px;}
@@ -336,7 +191,7 @@ b {
 
 @media (max-width : 766px) {
 
-    #succ {font-size: 40px;border: 3px solid gold;letter-spacing: 15px;}
+
     #visionn {font-size: 50px;line-height: 30px;padding: 0;}
     #jarviss {font-size: 50px;line-height: 30px;padding: 0;}
     .roww ul li img {display: block;margin: 5% auto;float: none;}
@@ -364,9 +219,6 @@ b {
     .item {margin: 0 5px;}
     #contact h2:hover {font-size: 22px;}
 }
-
-
-
 
 .navbar-brand_top {
     text-align: center;
