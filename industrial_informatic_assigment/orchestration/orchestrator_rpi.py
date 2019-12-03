@@ -5,16 +5,7 @@ from industrial_informatic_assigment.orchestration.orchestrator_status import Or
 from industrial_informatic_assigment.workstation.pallet import Pallet
 from industrial_informatic_assigment.workstation.phone import Phone
 from industrial_informatic_assigment.workstation.workstation import Workstation
-
-#from industrial_informatic_assigment.enum.status_code import StatusCode
-#from industrial_informatic_assigment.enum.zone import Zone
-#from industrial_informatic_assigment.enum.pallet_status import PalletStatus
-
 from industrial_informatic_assigment.enum.enum_variables import StatusCode, Zone, PalletStatus
-
-
-
-
 
 class Orchestrator:
 
@@ -53,7 +44,7 @@ class Orchestrator:
         self.bufferOrder.append(phone)
 
     def penSelectEndEvent(self):
-        pallet = self.getPalletOnZone(Zone.Z2)
+        pallet = self.getPalletFromZone(Zone.Z2)
         pallet.status = PalletStatus.WAIT_FOR_MOVING
 
     def penSelectStartEvent(self):
@@ -77,7 +68,7 @@ class Orchestrator:
         self.ws.pallets.append(pallet)
 
     def drawEndEvent(self):
-        pallet = self.getPalletOnByStatus(PalletStatus.DRAWING)
+        pallet = self.getPalletWithStatus(PalletStatus.DRAWING)
         if not pallet.frameDone or not pallet.screenDone or not pallet.keyboardDone:
             pallet.status = PalletStatus.WAITING
             return
@@ -94,7 +85,7 @@ class Orchestrator:
     def zone2Event(self, palletId: int):
         if palletId == -1:
             return
-        pallet = self.getPalletOnByStatus(PalletStatus.MOVING_TO_Z2)
+        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z2)
         if pallet is None:
             return
         pallet.locationZone = Zone.Z2
@@ -103,7 +94,7 @@ class Orchestrator:
     def zone3Event(self, palletId: int):
         if palletId == -1:
             return
-        pallet = self.getPalletOnByStatus(PalletStatus.MOVING_TO_Z3)
+        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z3)
         if pallet is None:
             return
         pallet.locationZone = Zone.Z3
@@ -112,7 +103,7 @@ class Orchestrator:
     def zone4Event(self, palletId: int):
         if palletId == -1:
             return
-        pallet = self.getPalletOnByStatus(PalletStatus.MOVING_TO_Z4)
+        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z4)
         if pallet is None:
             return
         pallet.locationZone = Zone.Z4
@@ -120,31 +111,31 @@ class Orchestrator:
 
     def zone5Event(self, palletId: int):
         if palletId == -1 or palletId == str("-1"):
-            pallet = self.getPalletOnByStatus(PalletStatus.WAIT_FOR_REMOVAL)
+            pallet = self.getPalletWithStatus(PalletStatus.WAIT_FOR_REMOVAL)
             if pallet is None:
                 return
             self.ws.pallets.remove(pallet)
             print("Orchestrator object: remove Pallet")
             return
-        pallet = self.getPalletOnByStatus(PalletStatus.MOVING_TO_Z5)
+        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z5)
         if pallet is None:
             return
         pallet.locationZone = Zone.Z5
         pallet.status = PalletStatus.WAIT_FOR_REMOVAL
 
-    def testIfAnyPalletStatusIs(self, status: PalletStatus) -> bool:
+    def testIfPalletWithStatusExist(self, status: PalletStatus) -> bool:
         for pallet in self.ws.pallets:
             if pallet.status == status:
                 return True
         return False
 
-    def getPalletOnZone(self, zone: Zone) -> Pallet:
+    def getPalletFromZone(self, zone: Zone) -> Pallet:
         for pallet in self.ws.pallets:
             if pallet.locationZone == zone:
                 return pallet
         print("Orchestrator object: couldn't find pallet on zone: " + str(zone.name))
 
-    def getPalletOnByStatus(self, status: PalletStatus):
+    def getPalletWithStatus(self, status: PalletStatus):
         for pallet in self.ws.pallets:
             if pallet.status == status:
                 return pallet
@@ -156,17 +147,17 @@ class Orchestrator:
     def testZone1(self):
         if not self.testIfZoneFree(Zone.Z1):
             return
-        pallet = self.getPalletOnZone(Zone.Z1)
+        pallet = self.getPalletFromZone(Zone.Z1)
         if pallet.status == PalletStatus.MOVING_TO_Z2:
             return
-        if not self.testIfZoneFree(Zone.Z2) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z2):
+        if not self.testIfZoneFree(Zone.Z2) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z2):
             print("Orchestrator object: move pallet from zone 1 to zone 2")
             pallet.status = PalletStatus.MOVING_TO_Z2
             self.ws.conveyor.movePallet(Zone.Z1, Zone.Z2)
             return
         if len(self.bufferOrder) == 0:
             return
-        if not self.testIfZoneFree(Zone.Z4) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z4):
+        if not self.testIfZoneFree(Zone.Z4) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z4):
             print("Orchestrator object: move pallet from zone 1 to zone 4")
             pallet.status = PalletStatus.MOVING_TO_Z4
             self.ws.conveyor.movePallet(Zone.Z1, Zone.Z4)
@@ -174,7 +165,7 @@ class Orchestrator:
     def testZone2(self):
         if not self.testIfZoneFree(Zone.Z2):
             return
-        pallet = self.getPalletOnZone(Zone.Z2)
+        pallet = self.getPalletFromZone(Zone.Z2)
         if pallet.status == PalletStatus.MOVING_TO_Z3 or pallet.status == PalletStatus.WAIT_PEN_CHANGE:
             return
         if pallet.status == PalletStatus.WAITING and not self.testIfZoneFree(Zone.Z3):
@@ -193,7 +184,7 @@ class Orchestrator:
     def testZone3(self):
         if not self.testIfZoneFree(Zone.Z3):
             return
-        pallet = self.getPalletOnZone(Zone.Z3)
+        pallet = self.getPalletFromZone(Zone.Z3)
         if pallet.status == PalletStatus.MOVING_TO_Z4 or pallet.status == PalletStatus.DRAWING:
             return
         if pallet.status == PalletStatus.WAITING:
@@ -211,7 +202,7 @@ class Orchestrator:
                 pallet.keyboardDone = True
             return
         if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfZoneFree(
-                Zone.Z5) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z5):
+                Zone.Z5) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z5):
             print("Orchestrator object: move pallet from zone 3 to zone 5")
             pallet.status = PalletStatus.MOVING_TO_Z5
             self.ws.conveyor.movePallet(Zone.Z3, Zone.Z5)
@@ -219,10 +210,10 @@ class Orchestrator:
     def testZone4(self):
         if not self.testIfZoneFree(Zone.Z4):
             return
-        pallet = self.getPalletOnZone(Zone.Z4)
+        pallet = self.getPalletFromZone(Zone.Z4)
         if pallet.status == PalletStatus.MOVING_TO_Z4:
             return
-        if not self.testIfZoneFree(Zone.Z5) and not self.testIfAnyPalletStatusIs(PalletStatus.MOVING_TO_Z5):
+        if not self.testIfZoneFree(Zone.Z5) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z5):
             pallet.status = PalletStatus.MOVING_TO_Z5
             self.ws.conveyor.movePallet(Zone.Z4, Zone.Z5)
 
@@ -231,13 +222,13 @@ class Orchestrator:
             return
 
     def printPalletInfo(self):
-        print("---------------------- Pallets in WS ----------------------")
+        print("--------------------------- PrintPalletInfo  ---------------------------")
         for p in self.ws.pallets:
             p.printPalletInfo()
 
     def testFinalStatus(self):
         for p in self.ws.pallets:
             if p.status is PalletStatus.WAIT_PEN_CHANGE or p.status is PalletStatus.MOVING_TO_Z2 or p.status is PalletStatus.MOVING_TO_Z3 or p.status is PalletStatus.MOVING_TO_Z4 or p.status is PalletStatus.MOVING_TO_Z5 or p.status is PalletStatus.DRAWING:
-                self.status.changeColor(StatusCode.WORKING)
+                self.status.changeLightColor(StatusCode.WORKING)
                 return
-        self.status.changeColor(StatusCode.IDLE)
+        self.status.changeLightColor(StatusCode.IDLE)

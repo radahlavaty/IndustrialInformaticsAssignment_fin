@@ -1,9 +1,6 @@
 import uuid
 import requests
 
-#rom industrial_informatic_assigment.enum.phone_color import PhoneColor
-#from industrial_informatic_assigment.enum.phone_shape import PhoneShape
-
 from industrial_informatic_assigment.enum.enum_variables import PhoneShape, PhoneColor
 
 class Robot:
@@ -54,8 +51,7 @@ class Robot:
         if rqst.status_code == 202:
             print("Robot: select pen SUCCESS, color: " + str(color.name))
         else:
-            print(
-                "Robot: select pen FAIL, color: " + str(color.name) + ", Status Code: " + str(rqst.status_code))
+            print("Robot: select pen FAIL, color: " + str(color.name) + ", Status Code: " + str(rqst.status_code))
 
     def executeDrawing(self, shape: PhoneShape, color: PhoneColor):
         if color != self.getPenColor():
@@ -68,6 +64,4 @@ class Robot:
         if rqst.status_code == 202:
             print("Robot: execute drawing SUCCESS, color: " + str(color.name))
         else:
-            print("Robot: execute drawing FAIL, color: " + str(color.name) +
-                  ", shape: " + str(shape.name) +
-                  " Status Code: " + str(rqst.status_code))
+            print("Robot: execute drawing FAIL, color: " + str(color.name) + ", shape: " + str(shape.name) + " Status Code: " + str(rqst.status_code))

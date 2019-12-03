@@ -11,17 +11,17 @@ from industrial_informatic_assigment.workstation.subsciber import Subscriber
 from industrial_informatic_assigment.workstation.workstation import Workstation
 
 # Workstations
-w2BaseUrl = "http://192.168.2"
-w2 = Workstation(w2BaseUrl, None)
+workstationBaseUrl = "http://192.168.2"
+workstation_obj = Workstation(workstationBaseUrl, None)
 
 # Subscribers
 raspberryPiAddress = "http://192.168.0.114:5000"
 sub = Subscriber(raspberryPiAddress)
-sub.subscribeToAllEventsOfWS(w2)
+sub.subscribeToAllEventsOfWS(workstation_obj)
 
 # Orchestration
 orchestratorStatus = OrchestratorStatus()
-orchestrator = Orchestrator(orchestratorStatus, w2)
+orchestrator = Orchestrator(orchestratorStatus, workstation_obj)
 orchestratorInput = OrchestratorInput(orchestrator)
 
 # Flask Application
@@ -35,7 +35,7 @@ def runFlaskApp():
 
 # Threads
 threadOrchestration = threading.Thread(target=orchestrator.runOrchestration, args=())
-threadOrchestrationInput = threading.Thread(target=orchestratorInput.startListening, args=())
+threadOrchestrationInput = threading.Thread(target=orchestratorInput.startWaitingForActions, args=())
 threadOrchestrationStatus = threading.Thread(target=orchestratorStatus.blink, args=())
 threadFlask = threading.Thread(target=runFlaskApp, args=())
 

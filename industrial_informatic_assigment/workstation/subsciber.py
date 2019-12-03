@@ -1,7 +1,6 @@
 import requests
-from industrial_informatic_assigment.workstation.workstation import Workstation
-#from industrial_informatic_assigment.enum.zone import Zone
 
+from industrial_informatic_assigment.workstation.workstation import Workstation
 from industrial_informatic_assigment.enum.enum_variables import Zone
 
 class Subscriber:
@@ -16,10 +15,10 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber: subscribe to Zone " + str(zone.value) +
+            print("Subscriber object: subscribe to Zone " + str(zone.value) +
                   ", IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
-            print("Subscriber: subscribe to Zone " + str(zone.value) + "SUCCESS")
+            print("Subscriber object: subscribe to Zone " + str(zone.value) + "SUCCESS")
 
     def subscribeToPenChangeStart(self, hostIP, endpoint):
         URL = hostIP + self.port + self.baseService + "/PenChangeStarted/notifs"
@@ -27,10 +26,10 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber: subscribe to pen change start FAIL, IP: " + hostIP +
+            print("Subscriber object: subscribe to pen change start FAIL, IP: " + hostIP +
                   " Status Code: " + str(rqst.status_code))
         else:
-            print("Subscriber: subscribe to  pen change start SUCCESS")
+            print("Subscriber object: subscribe to  pen change start SUCCESS")
 
     def subscribeToPenChangeEnd(self, hostIP, endpoint):
         URL = hostIP + self.port + self.baseService + "/PenChangeEnded/notifs"
@@ -38,10 +37,10 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber: subscribe to pen change end FAIL, IP: " + hostIP +
+            print("Subscriber object: subscribe to pen change end FAIL, IP: " + hostIP +
                   " Status Code: " + str(rqst.status_code))
         else:
-            print("Subscriber: subscribe to  pen change end SUCCESS")
+            print("Subscriber object: subscribe to  pen change end SUCCESS")
 
     def subscribeToDrawingStart(self, hostIP, endpoint):
         URL = hostIP + self.port + self.baseService + "/DrawStartExecution/notifs"
@@ -49,10 +48,10 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber: subscribe to drawing start FAIL, IP: " + hostIP +
+            print("Subscriber object: subscribe to drawing start FAIL, IP: " + hostIP +
                   " Status Code: " + str(rqst.status_code))
         else:
-            print("Subscriber: subscribe to drawing start SUCCESS")
+            print("Subscriber object: subscribe to drawing start SUCCESS")
 
     def subscribeToDrawingEnd(self, hostIP, endpoint):
         URL = hostIP + self.port + self.baseService + "/DrawEndExecution/notifs"
@@ -60,10 +59,9 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber: subscribe to drawing FAIL IP: " + hostIP +
-                  " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to drawing FAIL IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
-            print("Subscriber: subscribe to drawing end SUCCESS")
+            print("Subscriber object: subscribe to drawing end SUCCESS")
 
     # ???????????
 

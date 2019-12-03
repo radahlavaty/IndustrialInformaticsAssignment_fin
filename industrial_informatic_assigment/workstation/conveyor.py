@@ -1,7 +1,6 @@
 import uuid
 import requests
 
-#from industrial_informatic_assigment.enum.zone import Zone
 from industrial_informatic_assigment.enum.enum_variables import Zone
 
 class Conveyor:
@@ -17,9 +16,9 @@ class Conveyor:
         rqst = requests.post(URL, json={"destUrl": ""})
 
         if rqst.status_code == 202:
-            print("Conveyor: move pallet successful (Z" + str(zoneStart.value) + " to " + str(zoneEnd.value) + ")")
+            print("Conveyor object: move pallet successful (Z" + str(zoneStart.value) + " to " + str(zoneEnd.value) + ")")
         else:
-            print("Conveyor: move pallet error (Z" +
+            print("Conveyor object: move pallet error (Z" +
                   str(zoneStart.value) + " to " +
                   str(zoneEnd.value) + ") Status Code: " +
                   str(rqst.status_code))
@@ -34,7 +33,7 @@ class Conveyor:
             rqst = requests.post(URL, json={"destUrl": ""})
 
         if rqst.status_code != 200:
-            print("Conveyor: get zone status FAIL (Z: " + str(zone.value) + ")")
+            print("Conveyor object: get zone status FAIL (Z: " + str(zone.value) + ")")
 
         reqMsg = rqst.json()
         palletID = reqMsg["PalletID"]
