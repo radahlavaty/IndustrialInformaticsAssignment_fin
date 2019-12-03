@@ -1,5 +1,4 @@
 import json
-import logging
 import sqlite3
 from threading import Lock
 
