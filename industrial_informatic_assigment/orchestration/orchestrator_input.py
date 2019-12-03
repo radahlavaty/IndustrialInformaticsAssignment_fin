@@ -57,7 +57,7 @@ class OrchestratorInput:
                 self.state = 0
 
     def selectFrameState(self, button):
-        print("OrchestratorInput object: select frame shape")
+        print("OrchestratorInput object: select frame shape.")
         if button == self.okButton and self.selected:
             self.state = 2
             self.selected = False
