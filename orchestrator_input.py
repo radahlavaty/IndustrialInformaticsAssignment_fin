@@ -1,9 +1,9 @@
 import time
 import explorerhat
 
-from industrial_informatic_assigment.orchestration.orchestrator_rpi import Orchestrator
-from industrial_informatic_assigment.workstation.workstation import Phone
-from industrial_informatic_assigment.enum.enum_variables import PhoneColor, PhoneShape
+from orchestrator_rpi import Orchestrator
+from workstation import Phone
+from enum_variables import PhoneColor, PhoneShape
 
 
 class OrchestratorInput:

@@ -1,14 +1,12 @@
 import datetime
 import json
-import threading
-import time
 
 from flask import Flask, render_template
 from flask import request
 
-from industrial_informatic_assigment.monitoring.monitor_event_data import MonitoringEventDAO
-from industrial_informatic_assigment.workstation.subsciber import Subscriber
-from industrial_informatic_assigment.workstation.workstation import Workstation
+from monitor_event_data import MonitoringEventDAO
+from subscriber import Subscriber
+from workstation import Workstation
 
 
 # Workstation
@@ -17,7 +15,7 @@ ws = Workstation(workstationBaseUrl, None)
 
 # Subscriber
 locPort = 5000
-serverAddress = "http://192.168.101.200:" + str(locPort)
+serverAddress = "http://192.168.105.203:" + str(locPort)
 subscriber = Subscriber(serverAddress)
 subscriber.subscribeToAllEventsOfWsSimple(ws)
 

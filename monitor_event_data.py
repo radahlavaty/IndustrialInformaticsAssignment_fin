@@ -2,7 +2,7 @@ import json
 import sqlite3
 from threading import Lock
 
-from industrial_informatic_assigment.enum.enum_variables import Events
+from enum_variables import Events
 
 class EventWS:
     def __init__(self, dbId, eventID, ws, senderID, payload, serverTime):

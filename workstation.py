@@ -4,12 +4,13 @@ import requests
 # from industrial_informatic_assigment.workstation.conveyor import Conveyor
 # from industrial_informatic_assigment.workstation.robot import Robot
 # from industrial_informatic_assigment.workstation.phone import Phone
-from industrial_informatic_assigment.enum.enum_variables import PhoneShape, PhoneColor, Zone, PalletStatus
+from enum_variables import PhoneShape, PhoneColor, Zone, PalletStatus
+
 
 class Workstation:
 
     def __init__(self, baseIp, nextWS):
-        self.workstationID = uuid.uuid4()       # generate new ID
+        self.workstationID = uuid.uuid4()  # generate new ID
         self.robot = Robot(baseIp + ".1")
         self.conveyor = Conveyor(baseIp + ".2")
         self.pallets = []
@@ -38,15 +39,15 @@ class Workstation:
 
 class Robot:
     def __init__(self, hostIP):
-        self.robotID = uuid.uuid4()     # generate new ID
+        self.robotID = uuid.uuid4()  # generate new ID
         self.hostIP = hostIP
         self.baseService = "/rest/services"
         print("Initialization - New robot  with ID: (" + str(self.robotID) + ")")
 
     def calibrateRobot(self):
         URL = self.hostIP + self.baseService + "/Calibrate"
-        header = { 'content-type': 'application/json' }
-        rqst = requests.post(URL, json = {}, headers = header)
+        header = {'content-type': 'application/json'}
+        rqst = requests.post(URL, json={}, headers=header)
 
     def getPenColor(self):
         print("Robot: get pen color")
@@ -79,7 +80,7 @@ class Robot:
 
         URL = self.hostIP + self.baseService + "/" + colorUrlValue
 
-        rqst = requests.post(URL, json = {"destUrl": ""})
+        rqst = requests.post(URL, json={"destUrl": ""})
 
         if rqst.status_code == 202:
             print("Robot: select pen SUCCESS, color: " + str(color.name))
@@ -97,12 +98,14 @@ class Robot:
         if rqst.status_code == 202:
             print("Robot: execute drawing SUCCESS, color: " + str(color.name))
         else:
-            print("Robot: execute drawing FAIL, color: " + str(color.name) + ", shape: " + str(shape.name) + " Status Code: " + str(rqst.status_code))
+            print("Robot: execute drawing FAIL, color: " + str(color.name) + ", shape: " + str(
+                shape.name) + " Status Code: " + str(rqst.status_code))
+
 
 class Conveyor:
 
     def __init__(self, hostIP):
-        self.conveyorID = uuid.uuid4()      # generate new ID
+        self.conveyorID = uuid.uuid4()  # generate new ID
         self.hostIP = hostIP
         self.baseService = "/rest/services"
         print("Initialization: New conveyor with ID: (" + str(self.conveyorID) + ")")
@@ -112,9 +115,11 @@ class Conveyor:
         rqst = requests.post(URL, json={"destUrl": ""})
 
         if rqst.status_code == 202:
-            print("Conveyor object: move pallet successful (Z" + str(zoneStart.value) + " to " + str(zoneEnd.value) + ")")
+            print(
+                "Conveyor object: move pallet successful (Z" + str(zoneStart.value) + " to " + str(zoneEnd.value) + ")")
         else:
-            print("Conveyor object: move pallet error (Z" + str(zoneStart.value) + " to " + str(zoneEnd.value) + ") Status Code: " + str(rqst.status_code))
+            print("Conveyor object: move pallet error (Z" + str(zoneStart.value) + " to " + str(
+                zoneEnd.value) + ") Status Code: " + str(rqst.status_code))
 
     def getZoneStatus(self, zone: Zone):
         URL = self.hostIP + self.baseService + "/Z" + str(zone.value)
@@ -142,14 +147,14 @@ class Phone:
         self.color = color
 
     def printPhoneInfo(self):
-        print("PHONE -  Frame: " + str(self.frameShape.value) + " Keyboard: " + str(self.keyboardShape.value) + " Screen: " + str(self.screenShape.value) + " Color:" + str(self.color.name))
-
+        print("PHONE -  Frame: " + str(self.frameShape.value) + " Keyboard: " + str(
+            self.keyboardShape.value) + " Screen: " + str(self.screenShape.value) + " Color:" + str(self.color.name))
 
 
 class Pallet:
 
-    def __init__(self, phone: Phone, locationWS: Workstation, locationZone: Zone):
-        self.palletID = uuid.uuid4()        # generate new ID
+    def __init__(self, id, phone: Phone, locationWS: Workstation, locationZone: Zone):
+        self.palletID = id  # generate new ID
         self.phone = phone
         self.locationWS = locationWS
         self.locationZone = locationZone
@@ -160,4 +165,4 @@ class Pallet:
         print("Initialization: new pallet with ID:(" + str(self.palletID) + ")")
 
     def printPalletInfo(self):
-        print("PALLET - palletID:" + str(self.palletID) + " Zone: " + str(self.locationZone) + " Status: " + str(self.status.name))
+        print("Pallet Zone: " + str(self.locationZone) + " Status: " + str(self.status.name))

@@ -1,7 +1,7 @@
 import time
 import explorerhat
 
-from industrial_informatic_assigment.enum.enum_variables import StatusCode
+from enum_variables import StatusCode
 
 
 class OrchestratorStatus:

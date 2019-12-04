@@ -1,11 +1,12 @@
 import time
 import uuid
 
-from industrial_informatic_assigment.orchestration.orchestrator_status import OrchestratorStatus
+from orchestrator_status import OrchestratorStatus
 # from industrial_informatic_assigment.workstation.pallet import Pallet
 # from industrial_informatic_assigment.workstation.phone import Phone
-from industrial_informatic_assigment.workstation.workstation import Workstation, Phone, Pallet
-from industrial_informatic_assigment.enum.enum_variables import StatusCode, Zone, PalletStatus
+from workstation import Workstation, Phone, Pallet
+from enum_variables import StatusCode, Zone, PalletStatus
+
 
 class Orchestrator:
 
@@ -23,7 +24,7 @@ class Orchestrator:
             self.testZone3()
             self.testZone4()
             self.printPalletInfo()
-            time.sleep(5)
+            time.sleep(4)
 
     def addOrder(self, phone: Phone):
         print("Orchestrator object: new phone added to order list")
@@ -35,7 +36,8 @@ class Orchestrator:
             self.addOrderToBuffer(phone)
         else:
             print("Orchestrator object: add to pallet")
-            self.addPhoneToPallet(phone)
+            palletId = self.ws.conveyor.getZoneStatus(Zone.Z1)
+            self.addPhoneToPallet(palletId, phone)
 
     def addOrderToBuffer(self, phone: Phone):
         if len(self.bufferOrder) >= 2:
@@ -57,8 +59,8 @@ class Orchestrator:
                     return True
         return False
 
-    def addPhoneToPallet(self, phone: Phone):
-        pallet = Pallet(phone, self.ws, Zone.Z1)
+    def addPhoneToPallet(self, id, phone: Phone):
+        pallet = Pallet(id, phone, self.ws, Zone.Z1)
         pallet.status = PalletStatus.WAIT_FOR_MOVING
         self.addPalletToWS(pallet)
 
@@ -80,7 +82,7 @@ class Orchestrator:
         if self.testIfZoneFree(Zone.Z1):
             return
         if len(self.bufferOrder) >= 1:
-            self.addPhoneToPallet(self.bufferOrder.pop())
+            self.addPhoneToPallet(palletId, self.bufferOrder.pop())
 
     def zone2Event(self, palletId: int):
         if palletId == -1:
@@ -222,7 +224,7 @@ class Orchestrator:
             return
 
     def printPalletInfo(self):
-        print("--------------------------- PrintPalletInfo  ---------------------------")
+        print("Pallets: ")
         for p in self.ws.pallets:
             p.printPalletInfo()
 

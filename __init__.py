@@ -4,20 +4,20 @@ import threading
 from flask import Flask, request
 
 # Logging
-from industrial_informatic_assigment.orchestration.orchestrator_input import OrchestratorInput
-from industrial_informatic_assigment.orchestration.orchestrator_rpi import Orchestrator
-from industrial_informatic_assigment.orchestration.orchestrator_status import OrchestratorStatus
-from industrial_informatic_assigment.workstation.subsciber import Subscriber
-from industrial_informatic_assigment.workstation.workstation import Workstation
+from orchestrator_input import OrchestratorInput
+from orchestrator_rpi import Orchestrator
+from orchestrator_status import OrchestratorStatus
+from subscriber import Subscriber
+from workstation import Workstation
 
 # Workstations
-workstationBaseUrl = "http://192.168.12"
+workstationBaseUrl = "http://192.168.2"
 workstation_obj = Workstation(workstationBaseUrl, None)
 
 # Subscribers
 raspberryPiAddress = "http://192.168.0.114:5000"
 sub = Subscriber(raspberryPiAddress)
-sub.subscribeToAllEventsOfWS(workstation_obj)
+#sub.subscribeToAllEventsOfWS(workstation_obj)
 
 # Orchestration
 orchestratorStatus = OrchestratorStatus()
