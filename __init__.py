@@ -11,7 +11,7 @@ from industrial_informatic_assigment.workstation.subsciber import Subscriber
 from industrial_informatic_assigment.workstation.workstation import Workstation
 
 # Workstations
-workstationBaseUrl = "http://192.168.2"
+workstationBaseUrl = "http://192.168.12"
 workstation_obj = Workstation(workstationBaseUrl, None)
 
 # Subscribers

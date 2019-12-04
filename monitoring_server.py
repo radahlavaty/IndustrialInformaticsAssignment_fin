@@ -6,9 +6,7 @@ import time
 from flask import Flask, render_template
 from flask import request
 
-#from industrial_informatic_assigment.monitoring.monitoring_alarm_dao import MonitoringAlarmDAO
 from industrial_informatic_assigment.monitoring.monitor_event_data import MonitoringEventDAO
-#from industrial_informatic_assigment.monitoring.monitoring_service import MonitoringService
 from industrial_informatic_assigment.workstation.subsciber import Subscriber
 from industrial_informatic_assigment.workstation.workstation import Workstation
 
@@ -25,10 +23,6 @@ subscriber.subscribeToAllEventsOfWsSimple(ws)
 
 # DB
 eventDAO = MonitoringEventDAO(False)
-#alarmDAO = MonitoringAlarmDAO(False)
-# Service
-# monitoringService = MonitoringService(eventDAO, alarmDAO)
-
 
 app = Flask(__name__)
 

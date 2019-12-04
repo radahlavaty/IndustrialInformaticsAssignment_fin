@@ -2,9 +2,9 @@ import time
 import uuid
 
 from industrial_informatic_assigment.orchestration.orchestrator_status import OrchestratorStatus
-from industrial_informatic_assigment.workstation.pallet import Pallet
-from industrial_informatic_assigment.workstation.phone import Phone
-from industrial_informatic_assigment.workstation.workstation import Workstation
+# from industrial_informatic_assigment.workstation.pallet import Pallet
+# from industrial_informatic_assigment.workstation.phone import Phone
+from industrial_informatic_assigment.workstation.workstation import Workstation, Phone, Pallet
 from industrial_informatic_assigment.enum.enum_variables import StatusCode, Zone, PalletStatus
 
 class Orchestrator:

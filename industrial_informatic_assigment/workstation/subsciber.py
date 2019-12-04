@@ -15,8 +15,7 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to Zone " + str(zone.value) +
-                  ", IP: " + hostIP + " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to Zone " + str(zone.value) + ", IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
             print("Subscriber object: subscribe to Zone " + str(zone.value) + "SUCCESS")
 
@@ -26,8 +25,7 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to pen change start FAIL, IP: " + hostIP +
-                  " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to pen change start FAIL, IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
             print("Subscriber object: subscribe to  pen change start SUCCESS")
 
@@ -37,8 +35,7 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to pen change end FAIL, IP: " + hostIP +
-                  " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to pen change end FAIL, IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
             print("Subscriber object: subscribe to  pen change end SUCCESS")
 
@@ -48,8 +45,7 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to drawing start FAIL, IP: " + hostIP +
-                  " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to drawing start FAIL, IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
             print("Subscriber object: subscribe to drawing start SUCCESS")
 
@@ -63,7 +59,6 @@ class Subscriber:
         else:
             print("Subscriber object: subscribe to drawing end SUCCESS")
 
-    # ???????????
 
     def subscribeToAllEventsOfWS(self, ws: Workstation):
         self.subscribeToPenChangeEnd(ws.baseIp + ".1", "/rest/events/ws/" + str(ws.getUUID()) + "/PenChangeEnd/info")
