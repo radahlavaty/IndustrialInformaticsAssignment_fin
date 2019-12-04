@@ -76,55 +76,6 @@ class Orchestrator:
             return
         pallet.status = PalletStatus.WAIT_FOR_MOVING
 
-    def zone1Event(self, palletId: int):
-        if palletId == -1:
-            return
-        if self.testIfZoneFree(Zone.Z1):
-            return
-        if len(self.bufferOrder) >= 1:
-            self.addPhoneToPallet(palletId, self.bufferOrder.pop())
-
-    def zone2Event(self, palletId: int):
-        if palletId == -1:
-            return
-        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z2)
-        if pallet is None:
-            return
-        pallet.locationZone = Zone.Z2
-        pallet.status = PalletStatus.WAITING
-
-    def zone3Event(self, palletId: int):
-        if palletId == -1:
-            return
-        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z3)
-        if pallet is None:
-            return
-        pallet.locationZone = Zone.Z3
-        pallet.status = PalletStatus.WAITING
-
-    def zone4Event(self, palletId: int):
-        if palletId == -1:
-            return
-        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z4)
-        if pallet is None:
-            return
-        pallet.locationZone = Zone.Z4
-        pallet.status = PalletStatus.WAIT_FOR_MOVING
-
-    def zone5Event(self, palletId: int):
-        if palletId == -1 or palletId == str("-1"):
-            pallet = self.getPalletWithStatus(PalletStatus.WAIT_FOR_REMOVAL)
-            if pallet is None:
-                return
-            self.ws.pallets.remove(pallet)
-            print("Orchestrator object: remove Pallet")
-            return
-        pallet = self.getPalletWithStatus(PalletStatus.MOVING_TO_Z5)
-        if pallet is None:
-            return
-        pallet.locationZone = Zone.Z5
-        pallet.status = PalletStatus.WAIT_FOR_REMOVAL
-
     def testIfPalletWithStatusExist(self, status: PalletStatus) -> bool:
         for pallet in self.ws.pallets:
             if pallet.status == status:
@@ -194,12 +145,10 @@ class Orchestrator:
                 pallet.status = PalletStatus.DRAWING
                 self.ws.robot.executeDrawing(pallet.phone.keyboardShape)
                 pallet.keyboardDone = True
-            return
-        if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfZoneFree(
-                Zone.Z5) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z5):
-            print("Orchestrator object: move pallet from zone 3 to zone 5")
-            pallet.status = PalletStatus.MOVING_TO_Z5
-            self.ws.conveyor.movePallet(Zone.Z3, Zone.Z5)
+            elif not self.testIfZoneFree(Zone.Z5) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z5):
+                print("Orchestrator object: move pallet from zone 3 to zone 5")
+                pallet.status = PalletStatus.MOVING_TO_Z5
+                self.ws.conveyor.movePallet(Zone.Z3, Zone.Z5)
 
     def testZone4(self):
         if not self.testIfZoneFree(Zone.Z4):

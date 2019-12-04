@@ -4,6 +4,8 @@ import threading
 from flask import Flask, request
 
 # Logging
+from enum_variables import Zone
+from enum_variables import PalletStatus
 from orchestrator_input import OrchestratorInput
 from orchestrator_rpi import Orchestrator
 from orchestrator_status import OrchestratorStatus
@@ -88,9 +90,14 @@ def zone1EventAPI(wsId):
     print("Event: Zone 1 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone1Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
+    if payload["PalletID"] == -1:
+        return cnvMsg_str
+    if orchestrator.testIfZoneFree(Zone.Z1):
+        return cnvMsg_str
+    if len(orchestrator.bufferOrder) >= 1:
+        orchestrator.addPhoneToPallet(payload["PalletID"], orchestrator.bufferOrder.pop())
     return cnvMsg_str
 
 
@@ -99,9 +106,15 @@ def zone2EventAPI(wsId):
     print("Event: Zone 2 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone2Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
+    if payload["PalletID"] == -1:
+        return cnvMsg_str
+    pallet = orchestrator.getPalletWithStatus(PalletStatus.MOVING_TO_Z2)
+    if pallet is None:
+        return cnvMsg_str
+    pallet.locationZone = Zone.Z2
+    pallet.status = PalletStatus.WAITING
     return cnvMsg_str
 
 
@@ -110,9 +123,15 @@ def zone3EventAPI(wsId):
     print("Event: Zone 3 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone3Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
+    if payload["PalletID"] == -1:
+        return cnvMsg_str
+    pallet = orchestrator.getPalletWithStatus(PalletStatus.MOVING_TO_Z3)
+    if pallet is None:
+        return cnvMsg_str
+    pallet.locationZone = Zone.Z3
+    pallet.status = PalletStatus.WAITING
     return cnvMsg_str
 
 
@@ -121,9 +140,15 @@ def zone4EventAPI(wsId):
     print("Event: Zone 4 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone4Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
+    if payload["PalletID"] == -1:
+        return cnvMsg_str
+    pallet = orchestrator.getPalletWithStatus(PalletStatus.MOVING_TO_Z4)
+    if pallet is None:
+        return cnvMsg_str
+    pallet.locationZone = Zone.Z4
+    pallet.status = PalletStatus.WAIT_FOR_MOVING
     return cnvMsg_str
 
 
@@ -132,7 +157,18 @@ def zone5EventAPI(wsId):
     print("Event: Zone 5 Changed WS(" + wsId + ")")
     content = request.json
     payload = content["payload"]
-    orchestrator.zone5Event(payload["PalletID"])
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
+    if payload["PalletID"] == -1 or payload["PalletID"] == str("-1"):
+        pallet = orchestrator.getPalletWithStatus(PalletStatus.WAITING)
+        if pallet is None:
+            return cnvMsg_str
+        orchestrator.ws.pallets.remove(pallet)
+        print("Orchestrator object: remove Pallet")
+        return cnvMsg_str
+    pallet = orchestrator.getPalletWithStatus(PalletStatus.MOVING_TO_Z5)
+    if pallet is None:
+        return cnvMsg_str
+    pallet.locationZone = Zone.Z5
+    pallet.status = PalletStatus.WAITING
     return cnvMsg_str
