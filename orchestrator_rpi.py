@@ -168,17 +168,9 @@ class Orchestrator:
         if not self.testIfZoneFree(Zone.Z2):
             return
         pallet = self.getPalletFromZone(Zone.Z2)
-        if pallet.status == PalletStatus.MOVING_TO_Z3 or pallet.status == PalletStatus.WAIT_PEN_CHANGE:
+        if pallet.status == PalletStatus.MOVING_TO_Z3:
             return
         if pallet.status == PalletStatus.WAITING and not self.testIfZoneFree(Zone.Z3):
-            color = self.ws.robot.getPenColor()
-            if color != pallet.phone.color:
-                print("Orchestrator object: change pen")
-                pallet.status = PalletStatus.WAIT_PEN_CHANGE
-                self.ws.robot.selectPen(pallet.phone.color)
-            else:
-                pallet.status = PalletStatus.WAIT_FOR_MOVING
-        if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfZoneFree(Zone.Z3):
             print("Orchestrator object: move pallet from zone 2 to zone 3")
             self.ws.conveyor.movePallet(Zone.Z2, Zone.Z3)
             pallet.status = PalletStatus.MOVING_TO_Z3
@@ -192,15 +184,15 @@ class Orchestrator:
         if pallet.status == PalletStatus.WAITING:
             if not pallet.frameDone:
                 pallet.status = PalletStatus.DRAWING
-                self.ws.robot.executeDrawing(pallet.phone.frameShape, pallet.phone.color)
+                self.ws.robot.executeDrawing(pallet.phone.frameShape)
                 pallet.frameDone = True
             elif not pallet.screenDone:
                 pallet.status = PalletStatus.DRAWING
-                self.ws.robot.executeDrawing(pallet.phone.screenShape, pallet.phone.color)
+                self.ws.robot.executeDrawing(pallet.phone.screenShape)
                 pallet.screenDone = True
             elif not pallet.keyboardDone:
                 pallet.status = PalletStatus.DRAWING
-                self.ws.robot.executeDrawing(pallet.phone.keyboardShape, pallet.phone.color)
+                self.ws.robot.executeDrawing(pallet.phone.keyboardShape)
                 pallet.keyboardDone = True
             return
         if pallet.status == PalletStatus.WAIT_FOR_MOVING and not self.testIfZoneFree(

@@ -9,7 +9,7 @@ from enum_variables import PhoneColor, PhoneShape
 class OrchestratorInput:
 
     def __init__(self, orchestrator: Orchestrator):
-        self.phone = Phone(PhoneShape.FRAME_1, PhoneShape.KEYBOARD_1, PhoneShape.SCREEN_1, PhoneColor.RED)
+        self.phone = Phone(PhoneShape.FRAME_1, PhoneShape.KEYBOARD_1, PhoneShape.SCREEN_1)
         self.state = 0
         self.selected = False
         self.orchestrator = orchestrator

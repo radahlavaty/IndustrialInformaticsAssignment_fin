@@ -87,18 +87,15 @@ class Robot:
         else:
             print("Robot: select pen FAIL, color: " + str(color.name) + ", Status Code: " + str(rqst.status_code))
 
-    def executeDrawing(self, shape: PhoneShape, color: PhoneColor):
-        if color != self.getPenColor():
-            print("Robot: color selection FAIL")
+    def executeDrawing(self, shape: PhoneShape):
+        url = self.hostIP + self.baseService + "/" + shape.value
 
-        URL = self.hostIP + self.baseService + "/" + shape.value
-
-        rqst = requests.post(URL, json={"destUrl": ""})
+        rqst = requests.post(url, json={"destUrl": ""})
 
         if rqst.status_code == 202:
-            print("Robot: execute drawing SUCCESS, color: " + str(color.name))
+            print("Robot: execute drawing SUCCESS")
         else:
-            print("Robot: execute drawing FAIL, color: " + str(color.name) + ", shape: " + str(
+            print("Robot: execute drawing FAIL" + ", shape: " + str(
                 shape.name) + " Status Code: " + str(rqst.status_code))
 
 
@@ -140,15 +137,14 @@ class Conveyor:
 
 
 class Phone:
-    def __init__(self, frameShape: PhoneShape, keyboardShape: PhoneShape, screenShape: PhoneShape, color: PhoneColor):
+    def __init__(self, frameShape: PhoneShape, keyboardShape: PhoneShape, screenShape: PhoneShape):
         self.frameShape = frameShape
         self.keyboardShape = keyboardShape
         self.screenShape = screenShape
-        self.color = color
 
     def printPhoneInfo(self):
         print("PHONE -  Frame: " + str(self.frameShape.value) + " Keyboard: " + str(
-            self.keyboardShape.value) + " Screen: " + str(self.screenShape.value) + " Color:" + str(self.color.name))
+            self.keyboardShape.value) + " Screen: " + str(self.screenShape.value))
 
 
 class Pallet:
