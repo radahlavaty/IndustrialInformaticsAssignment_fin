@@ -19,9 +19,7 @@ class PalletStatus(Enum):
     MOVING_TO_Z4 = 3
     MOVING_TO_Z5 = 4
     DRAWING = 5
-    WAIT_PEN_CHANGE = 6
-    WAITING = 7
-    WAIT_FOR_MOVING = 8
+    WAITING = 6
 
 
 class PhoneColor(Enum):

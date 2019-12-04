@@ -47,7 +47,7 @@ class Orchestrator:
 
     def penSelectEndEvent(self):
         pallet = self.getPalletFromZone(Zone.Z2)
-        pallet.status = PalletStatus.WAIT_FOR_MOVING
+        pallet.status = PalletStatus.WAITING
 
     def penSelectStartEvent(self):
         pass
@@ -61,7 +61,7 @@ class Orchestrator:
 
     def addPhoneToPallet(self, id, phone: Phone):
         pallet = Pallet(id, phone, self.ws, Zone.Z1)
-        pallet.status = PalletStatus.WAIT_FOR_MOVING
+        pallet.status = PalletStatus.WAITING
         self.addPalletToWS(pallet)
 
     def addPalletToWS(self, pallet):
@@ -74,7 +74,7 @@ class Orchestrator:
         if not pallet.frameDone or not pallet.screenDone or not pallet.keyboardDone:
             pallet.status = PalletStatus.WAITING
             return
-        pallet.status = PalletStatus.WAIT_FOR_MOVING
+        pallet.status = PalletStatus.WAITING
 
     def testIfPalletWithStatusExist(self, status: PalletStatus) -> bool:
         for pallet in self.ws.pallets:
@@ -171,7 +171,7 @@ class Orchestrator:
 
     def testFinalStatus(self):
         for p in self.ws.pallets:
-            if p.status is PalletStatus.WAIT_PEN_CHANGE or p.status is PalletStatus.MOVING_TO_Z2 or p.status is PalletStatus.MOVING_TO_Z3 or p.status is PalletStatus.MOVING_TO_Z4 or p.status is PalletStatus.MOVING_TO_Z5 or p.status is PalletStatus.DRAWING:
+            if p.status is PalletStatus.MOVING_TO_Z2 or p.status is PalletStatus.MOVING_TO_Z3 or p.status is PalletStatus.MOVING_TO_Z4 or p.status is PalletStatus.MOVING_TO_Z5 or p.status is PalletStatus.DRAWING:
                 self.status.changeLightColor(StatusCode.WORKING)
                 return
         self.status.changeLightColor(StatusCode.IDLE)

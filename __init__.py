@@ -148,7 +148,7 @@ def zone4EventAPI(wsId):
     if pallet is None:
         return cnvMsg_str
     pallet.locationZone = Zone.Z4
-    pallet.status = PalletStatus.WAIT_FOR_MOVING
+    pallet.status = PalletStatus.WAITING
     return cnvMsg_str
 
 
@@ -160,7 +160,7 @@ def zone5EventAPI(wsId):
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     if payload["PalletID"] == -1 or payload["PalletID"] == str("-1"):
-        pallet = orchestrator.getPalletWithStatus(PalletStatus.WAITING)
+        pallet = orchestrator.getPalletFromZone(Zone.Z5)
         if pallet is None:
             return cnvMsg_str
         orchestrator.ws.pallets.remove(pallet)
