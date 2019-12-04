@@ -13,7 +13,7 @@ class OrchestratorInput:
         self.state = 0
         self.selected = False
         self.orchestrator = orchestrator
-        self.okButton = 1
+        self.okButton = 5
 
     def startWaitingForActions(self):
         explorerhat.touch.pressed(self.changeState)
@@ -22,14 +22,11 @@ class OrchestratorInput:
             if self.state == 0:
                 explorerhat.light[0].off()
                 time.sleep(0.1)
-            elif self.state == 5:
+            elif self.state == 4:
                 explorerhat.light[0].on()
                 time.sleep(0.2)
                 explorerhat.light[0].off()
                 time.sleep(0.2)
-            elif self.selected:
-                explorerhat.light[0].on()
-                time.sleep(0.1)
             else:
                 explorerhat.light[0].on()
                 time.sleep(0.5)
@@ -48,9 +45,7 @@ class OrchestratorInput:
         elif self.state == 3:
             self.selectKeyboardState(button)
         elif self.state == 4:
-            self.selectColorState(button)
-        elif self.state == 5:
-            if button == self.okButton:
+            if button == 6:
                 print("OrchestratorInput object: Phone")
                 self.phone.printPhoneInfo()
                 self.orchestrator.addOrder(self.phone)
@@ -58,63 +53,40 @@ class OrchestratorInput:
 
     def selectFrameState(self, button):
         print("OrchestratorInput object: select frame shape.")
-        if button == self.okButton and self.selected:
-            self.state = 2
-            self.selected = False
-        elif button == 2:
+        if button == 1:
             self.phone.frameShape = PhoneShape.FRAME_1
-            self.selected = True
-        elif button == 3:
+            self.state = 2
+        elif button == 2:
             self.phone.frameShape = PhoneShape.FRAME_2
-            self.selected = True
-        elif button == 4:
+            self.state = 2
+        elif button == 3:
             self.phone.frameShape = PhoneShape.FRAME_3
-            self.selected = True
+            self.state = 2
 
     def selectScreenState(self, button):
         print("OrchestratorInput object: select screen shape")
-        if button == self.okButton and self.selected:
-            self.state = 3
-            self.selected = False
-        elif button == 2:
+
+        if button == 1:
             self.phone.screenShape = PhoneShape.SCREEN_1
-            self.selected = True
-        elif button == 3:
+            self.state = 3
+        elif button == 2:
             self.phone.screenShape = PhoneShape.SCREEN_2
-            self.selected = True
-        elif button == 4:
+            self.state = 3
+        elif button == 3:
             self.phone.screenShape = PhoneShape.SCREEN_3
-            self.selected = True
+            self.state = 3
 
     def selectKeyboardState(self, button):
         print("OrchestratorInput object: select keyboard shape")
-        if button == self.okButton and self.selected:
-            self.state = 4
-            self.selected = False
-        elif button == 2:
+        if button == 1:
             self.phone.keyboardShape = PhoneShape.KEYBOARD_1
-            self.selected = True
-        elif button == 3:
-            self.phone.keyboardShape = PhoneShape.KEYBOARD_2
-            self.selected = True
-        elif button == 4:
-            self.phone.keyboardShape = PhoneShape.KEYBOARD_3
-            self.selected = True
-
-    def selectColorState(self, button):
-        print("OrchestratorInput object: select phone color")
-        if button == self.okButton and self.selected:
-            self.state = 5
-            self.selected = False
+            self.state = 4
         elif button == 2:
-            self.phone.color = PhoneColor.RED
-            self.selected = True
+            self.phone.keyboardShape = PhoneShape.KEYBOARD_2
+            self.state = 4
         elif button == 3:
-            self.phone.color = PhoneColor.GREEN
-            self.selected = True
-        elif button == 4:
-            self.phone.color = PhoneColor.BLUE
-            self.selected = True
+            self.phone.keyboardShape = PhoneShape.KEYBOARD_3
+            self.state = 4
 
     def resetPhone(self):
         self.state = 0
