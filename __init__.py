@@ -19,7 +19,7 @@ workstation_obj = Workstation(workstationBaseUrl, None)
 # Subscribers
 raspberryPiAddress = "http://192.168.0.114:5000"
 sub = Subscriber(raspberryPiAddress)
-#sub.subscribeToAllEventsOfWS(workstation_obj)
+sub.subscribeToAllEventsOfWS(workstation_obj)
 
 # Orchestration
 orchestratorStatus = OrchestratorStatus()
@@ -48,46 +48,18 @@ threadOrchestrationInput.start()
 
 
 # API Event Endpoints
-@app.route('/rest/events/ws/<string:wsId>/PenChangeEnd/info', methods=['POST'])
-def penSelectEndEventAPI(wsId):
-    print("Event: Pen Selected End WS(" + wsId + ")")
-    content = request.json
-    orchestrator.penSelectEndEvent()
-    cnvMsg = {}
-    cnvMsg_str = json.dumps(cnvMsg)
-    return cnvMsg_str
-
-
-@app.route('/rest/events/ws/<string:wsId>/PenChangeStart/info', methods=['POST'])
-def penSelectStartEventAPI(wsId):
-    print("Event: Pen Selected Start WS(" + wsId + ")")
-    orchestrator.penSelectStartEvent()
-    cnvMsg = {}
-    cnvMsg_str = json.dumps(cnvMsg)
-    return cnvMsg_str
-
-
-@app.route('/rest/events/ws/<string:wsId>/DrawStartExecution/info', methods=['POST'])
-def drawStartEventAPI(wsId):
-    print("Event: Drawing Start WS(" + wsId + ")")
-    orchestrator.drawStartEvent()
-    cnvMsg = {}
-    cnvMsg_str = json.dumps(cnvMsg)
-    return cnvMsg_str
-
-
-@app.route('/rest/events/ws/<string:wsId>/DrawEndExecution/info', methods=['POST'])
-def drawEventAPI(wsId):
-    print("Event: Drawing End WS(" + wsId + ")")
+@app.route('/rest/events/DrawEndExecution', methods=['POST'])
+def drawEventAPI():
+    print("Event: Drawing End")
     orchestrator.drawEndEvent()
     cnvMsg = {}
     cnvMsg_str = json.dumps(cnvMsg)
     return cnvMsg_str
 
 
-@app.route('/rest/events/ws/<string:wsId>/Z1_Changed/info', methods=['POST'])
-def zone1EventAPI(wsId):
-    print("Event: Zone 1 Changed WS(" + wsId + ")")
+@app.route('/rest/events/Z1_Changed', methods=['POST'])
+def zone1EventAPI():
+    print("Event: Zone 1 Changed")
     content = request.json
     payload = content["payload"]
     cnvMsg = {}
@@ -101,9 +73,9 @@ def zone1EventAPI(wsId):
     return cnvMsg_str
 
 
-@app.route('/rest/events/ws/<string:wsId>/Z2_Changed/info', methods=['POST'])
-def zone2EventAPI(wsId):
-    print("Event: Zone 2 Changed WS(" + wsId + ")")
+@app.route('/rest/events/Z2_Changed', methods=['POST'])
+def zone2EventAPI():
+    print("Event: Zone 2 Changed")
     content = request.json
     payload = content["payload"]
     cnvMsg = {}
@@ -118,9 +90,9 @@ def zone2EventAPI(wsId):
     return cnvMsg_str
 
 
-@app.route('/rest/events/ws/<string:wsId>/Z3_Changed/info', methods=['POST'])
-def zone3EventAPI(wsId):
-    print("Event: Zone 3 Changed WS(" + wsId + ")")
+@app.route('/rest/events/Z3_Changed', methods=['POST'])
+def zone3EventAPI():
+    print("Event: Zone 3 Changed")
     content = request.json
     payload = content["payload"]
     cnvMsg = {}
@@ -135,9 +107,9 @@ def zone3EventAPI(wsId):
     return cnvMsg_str
 
 
-@app.route('/rest/events/ws/<string:wsId>/Z4_Changed/info', methods=['POST'])
-def zone4EventAPI(wsId):
-    print("Event: Zone 4 Changed WS(" + wsId + ")")
+@app.route('/rest/events/Z4_Changed', methods=['POST'])
+def zone4EventAPI():
+    print("Event: Zone 4 Changed")
     content = request.json
     payload = content["payload"]
     cnvMsg = {}
@@ -152,9 +124,9 @@ def zone4EventAPI(wsId):
     return cnvMsg_str
 
 
-@app.route('/rest/events/ws/<string:wsId>/Z5_Changed/info', methods=['POST'])
-def zone5EventAPI(wsId):
-    print("Event: Zone 5 Changed WS(" + wsId + ")")
+@app.route('/rest/events/Z5_Changed', methods=['POST'])
+def zone5EventAPI():
+    print("Event: Zone 5 Changed")
     content = request.json
     payload = content["payload"]
     cnvMsg = {}

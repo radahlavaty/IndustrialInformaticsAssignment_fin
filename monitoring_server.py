@@ -8,7 +8,6 @@ from monitor_event_data import MonitoringEventDAO
 from subscriber import Subscriber
 from workstation import Workstation
 
-
 # Workstation
 workstationBaseUrl = "http://192.168.2"
 ws = Workstation(workstationBaseUrl, None)
@@ -20,7 +19,7 @@ subscriber = Subscriber(serverAddress)
 subscriber.subscribeToAllEventsOfWsSimple(ws)
 
 # DB
-eventDAO = MonitoringEventDAO(False)
+eventDAO = MonitoringEventDAO()
 
 app = Flask(__name__)
 
@@ -29,15 +28,16 @@ app = Flask(__name__)
 def static_page(page_name):
     return render_template('%s.html' % page_name)
 
+
 # Events API
 
 # Add event
-@app.route('/rest/ws/<string:wsId>/event', methods=['POST'])
-def index(wsId):
+@app.route('/rest/event', methods=['POST'])
+def postEvent():
     eventDesc = request.json
 
     serverTime = datetime.datetime.now()
-    eventDic = {"eventID": eventDesc['id'], "ws": wsId, "senderID": eventDesc['senderID'],
+    eventDic = {"eventID": eventDesc['id'], "senderID": eventDesc['senderID'],
                 "payload": eventDesc['payload'], "serverTime": serverTime}
     eventDAO.insert_event(eventDic)
 
@@ -53,34 +53,12 @@ def getEvents():
     return allEventsJson
 
 
-# @app.route('/rest/ws/status', methods=['GET'])
-# def getWsStatus():
-#     status = monitoringService.getStatusOfWS()
-#     cnvMsg_str = json.dumps(vars(status))
-#     return cnvMsg_str
-
-
-# @app.route('/rest/alarm', methods=['GET'])
-# def getAllAlarms():
-    # alarms = monitoringService.getAllAlarms()
-    # cnvMsg_str = json.dumps(alarms)
-    # return cnvMsg_str
-
-
-# def detect_time_elapsed_alarms():
-#     pass
-    # logging.debug("Checking for time elapsed alarms...")
-    # sqlSt="SELECT * FROM event WHERE 1"
-    # c.execute(sqlSt)
-    # allRobots=c.fetchall()
-    # logging.info(allRobots)
-
-
-# Find alarms
-# def checkTimeElapsedAlarms():
-    # logging.debug("Checking DB for alarms")
-    # monitoringService.checkForNewAlarms()
-    # threading.Timer(5.0, checkTimeElapsedAlarms).start()
+@app.route('/rest/events/time/<timestamp>', methods=['GET'])
+def getEventsNewer(timestamp):
+    print("Retrieving all the events...")
+    allEvents = eventDAO.getNewerEvents(timestamp)
+    allEventsJson = json.dumps(allEvents)
+    return allEventsJson
 
 
 if __name__ == '__main__':

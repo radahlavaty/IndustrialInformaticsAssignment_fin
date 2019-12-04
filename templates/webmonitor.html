@@ -173,198 +173,6 @@
             margin: 0 auto;
         }
 
-
-        @media (min-width: 1025px) {
-            header {
-                height: 100vh;
-            }
-        }
-
-        @media (max-width: 1024px) {
-
-            b {
-                font-size: 30px;
-            }
-
-            b:hover {
-                color: red;
-                line-height: 1.1;
-                font-weight: 900;
-                font-size: 40px;
-            }
-
-            #datum {
-                font-weight: 200;
-                font-size: 20px;
-            }
-
-            #zaujem {
-                letter-spacing: 1.2px;
-                margin: 30px 10%;
-                padding: 0;
-                line-height: 1.2;
-                overflow: auto;
-            }
-
-            #widthHeading, #widthAbout, #widthOffer, #widthSuccess, #widthVision, #widthJarvis, #widthFreetime, #widthHelp, #widthContact {
-                width: auto;
-                margin: 0 5%;
-            }
-
-            #widthHeading h1 {
-                font-size: 80px;
-                text-align: center;
-                letter-spacing: 20px;
-            }
-
-            #because {
-                display: block;
-                line-height: 1;
-                font-size: 25px;
-            }
-
-            .column {
-                display: block;
-                width: 100%;
-            }
-
-            .wrapper h2 {
-                font-size: 45px;
-            }
-
-            #offer h1 {
-                padding: 0.5em 0;
-                font-size: 35px;
-            }
-
-            #offer ul {
-                margin: 0;
-            }
-
-            #success ul {
-                margin: 0;
-                font-size: 20px;
-            }
-
-            .column2 ul li img {
-                width: 60px;
-            }
-
-            #success ul li p {
-                margin-left: 70px;
-                padding-top: 10px;
-            }
-        }
-
-        @media (max-width: 766px) {
-
-
-            #visionn {
-                font-size: 50px;
-                line-height: 30px;
-                padding: 0;
-            }
-
-            #jarviss {
-                font-size: 50px;
-                line-height: 30px;
-                padding: 0;
-            }
-
-            .roww ul li img {
-                display: block;
-                margin: 5% auto;
-                float: none;
-            }
-
-            #vision iframe {
-                width: 100%;
-                max-width: 560px;
-            }
-
-            #jarvis iframe {
-                width: 100%;
-                max-width: 560px;
-            }
-
-            .slideshow-container img {
-                max-height: 300px;
-                max-width: 100%;
-            }
-
-            #contact h2 {
-                font-size: 30px;
-            }
-
-            #contact h1 {
-                font-size: 40px;
-            }
-
-            #contact h2:hover {
-                font-size: 35px;
-            }
-        }
-
-        @media (max-width: 450px) {
-
-            #prve {
-                overflow: hidden;
-            }
-
-            #oslovenie {
-                padding-top: 350px;
-                font-size: 60px;
-            }
-
-            #widthHeading h1 {
-                font-size: 50px;
-                letter-spacing: 15px;
-            }
-
-            .wrapper h2 {
-                font-size: 35px;
-                margin-right: 0;
-            }
-
-            #succ {
-                font-size: 30px;
-            }
-
-            #visionn {
-                font-size: 40px;
-                letter-spacing: 20px;
-            }
-
-            #jarviss {
-                font-size: 40px;
-                letter-spacing: 20px;
-            }
-
-            #freetime h1 {
-                font-size: 50px;
-            }
-
-            #contact h1 {
-                font-size: 30px;
-            }
-
-            #contact h3 {
-                font-size: 25px;
-            }
-
-            #contact h2 {
-                font-size: 22px;
-            }
-
-            .item {
-                margin: 0 5px;
-            }
-
-            #contact h2:hover {
-                font-size: 22px;
-            }
-        }
-
         .navbar-brand_top {
             text-align: center;
         }
@@ -400,60 +208,8 @@
 </nav>
 
 <div class="container2">
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12">
-            <h1 class="title">Web UI Monitoring Client</h1>
-        </div>
-
-        <div class="card sm-12 md-12 lg-12">
-
-            <div class="card-header">
-                Current Status - Robot & Conveyor
-            </div>
-
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Zone 1:</li>
-                    <li class="list-group-item">Zone 2:</li>
-                    <li class="list-group-item">Zone 3:</li>
-                    <li class="list-group-item">Zone 4:</li>
-                    <li class="list-group-item">Zone 5:</li>
-                    <li class="list-group-item">Robot:</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
-    <table id="tables1">
-        <thead>
-        </thead>
-        <tr>
-            <th>Current Status - Robot & Conveyor</th>
-        </tr>
-        <tr>
-            <td>Zone 1:</td>
-        </tr>
-        <tr>
-            <td>Zone 2:</td>
-        </tr>
-        <tr>
-            <td>Zone 3:</td>
-        </tr>
-        <tr>
-            <td>Zone 4:</td>
-        </tr>
-        <tr>
-            <td>Zone 5:</td>
-        </tr>
-        <tr>
-            <td>ROBOT:</td>
-        </tr>
-    </table>
-
-
-
-
+    <input id="date" name="date" type="date">
+    <button type="submit" value="button" onclick="buttonPressed()">Get Events</button>
     <table id="tables2">
         <thead>
         <tr>
@@ -475,6 +231,33 @@
 
 
 <script>
+    let dateValue = "";
+    function buttonPressed() {
+        dateValue = document.getElementById("date").value;
+        if (dateValue === "") {
+            dateValue = "";
+            getAllEvents();
+        } else {
+            getEventsByDate();
+        }
+    }
+    function getEventsByDate() {
+        let date = Date.parse(dateValue);
+         $.get("/rest/events/time/" + date, function (data) {
+            let events = JSON.parse(data);
+            txt = "";
+            for (x in events) {
+                txt += "<tr>";
+                txt += "<th scope=\"row\">" + events[x]["id"] + "</th>";
+                txt += "<td>" + events[x]["eventID"] + "</td>";
+                txt += "<td>" + events[x]["payload"] + "</td>";
+                txt += "<td>" + events[x]["serverTime"] + "</td>";
+                txt += "</tr>"
+            }
+
+            document.getElementById("eventData").innerHTML = txt;
+        });
+    }
 
 
     function getAllEvents() {
@@ -499,7 +282,12 @@
 
 
     window.setInterval(function () {
-        getAllEvents();
+        if(dateValue === ""){
+            getAllEvents();
+        }else{
+            getEventsByDate();
+        }
+
     }, 1500);
 
 

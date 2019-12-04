@@ -3,6 +3,7 @@ import requests
 from workstation import Workstation
 from enum_variables import Zone
 
+
 class Subscriber:
     def __init__(self, ownAdress):
         self.ownAdress = ownAdress
@@ -15,7 +16,9 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to Zone " + str(zone.value) + ", IP: " + hostIP + " Status Code: " + str(rqst.status_code))
+            print(
+                "Subscriber object: subscribe to Zone " + str(zone.value) + ", IP: " + hostIP + " Status Code: " + str(
+                    rqst.status_code))
         else:
             print("Subscriber object: subscribe to Zone " + str(zone.value) + "SUCCESS")
 
@@ -25,7 +28,8 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to pen change start FAIL, IP: " + hostIP + " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to pen change start FAIL, IP: " + hostIP + " Status Code: " + str(
+                rqst.status_code))
         else:
             print("Subscriber object: subscribe to  pen change start SUCCESS")
 
@@ -35,7 +39,8 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to pen change end FAIL, IP: " + hostIP + " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to pen change end FAIL, IP: " + hostIP + " Status Code: " + str(
+                rqst.status_code))
         else:
             print("Subscriber object: subscribe to  pen change end SUCCESS")
 
@@ -45,7 +50,8 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to drawing start FAIL, IP: " + hostIP + " Status Code: " + str(rqst.status_code))
+            print("Subscriber object: subscribe to drawing start FAIL, IP: " + hostIP + " Status Code: " + str(
+                rqst.status_code))
         else:
             print("Subscriber object: subscribe to drawing start SUCCESS")
 
@@ -55,37 +61,32 @@ class Subscriber:
         rqst = requests.post(URL, json={"destUrl": destUrl})
 
         if rqst.status_code != 200:
-            print("Subscriber object: subscribe to drawing FAIL IP: " + hostIP + " Status Code: " + str(rqst.status_code))
+            print(
+                "Subscriber object: subscribe to drawing FAIL IP: " + hostIP + " Status Code: " + str(rqst.status_code))
         else:
             print("Subscriber object: subscribe to drawing end SUCCESS")
 
-
     def subscribeToAllEventsOfWS(self, ws: Workstation):
-        self.subscribeToPenChangeEnd(ws.baseIp + ".1", "/rest/events/ws/" + str(ws.getUUID()) + "/PenChangeEnd/info")
-        self.subscribeToPenChangeStart(ws.baseIp + ".1",
-                                       "/rest/events/ws/" + str(ws.getUUID()) + "/PenChangeStart/info")
-        self.subscribeToDrawingStart(ws.baseIp + ".1",
-                                     "/rest/events/ws/" + str(ws.getUUID()) + "/DrawStartExecution/info")
-        self.subscribeToDrawingEnd(ws.baseIp + ".1", "/rest/events/ws/" + str(ws.getUUID()) + "/DrawEndExecution/info")
+        self.subscribeToDrawingEnd(ws.baseIp + ".1", "/rest/events/DrawEndExecution")
         self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z1,
-                                   "/rest/events/ws/" + str(ws.getUUID()) + "/Z1_Changed/info")
+                                   "/rest/events/Z1_Changed")
         self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z2,
-                                   "/rest/events/ws/" + str(ws.getUUID()) + "/Z2_Changed/info")
+                                   "/rest/events/Z2_Changed")
         self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z3,
-                                   "/rest/events/ws/" + str(ws.getUUID()) + "/Z3_Changed/info")
+                                   "/rest/events/Z3_Changed")
         self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z4,
-                                   "/rest/events/ws/" + str(ws.getUUID()) + "/Z4_Changed/info")
+                                   "/rest/events/Z4_Changed")
         self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z5,
-                                   "/rest/events/ws/" + str(ws.getUUID()) + "/Z5_Changed/info")
+                                   "/rest/events/Z5_Changed")
 
     def subscribeToAllEventsOfWsSimple(self, ws: Workstation):
         endpointName = "/event"
-        self.subscribeToPenChangeEnd(ws.baseIp + ".1", "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToPenChangeStart(ws.baseIp + ".1", "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToDrawingStart(ws.baseIp + ".1", "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToDrawingEnd(ws.baseIp + ".1", "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z1, "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z2, "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z3, "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z4, "/rest/ws/" + str(ws.getUUID()) + endpointName)
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z5, "/rest/ws/" + str(ws.getUUID()) + endpointName)
+        self.subscribeToPenChangeEnd(ws.baseIp + ".1", "/rest" + endpointName)
+        self.subscribeToPenChangeStart(ws.baseIp + ".1", "/rest" + endpointName)
+        self.subscribeToDrawingStart(ws.baseIp + ".1", "/rest" + str(ws.getUUID()) + endpointName)
+        self.subscribeToDrawingEnd(ws.baseIp + ".1", "/rest" + str(ws.getUUID()) + endpointName)
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z1, "/rest" + endpointName)
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z2, "/rest" + endpointName)
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z3, "/rest" + endpointName)
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z4, "/rest" + endpointName)
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z5, "/rest" + endpointName)

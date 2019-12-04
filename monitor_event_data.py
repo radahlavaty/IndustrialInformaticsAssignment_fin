@@ -1,5 +1,6 @@
 import json
 import sqlite3
+from datetime import datetime
 from threading import Lock
 
 from enum_variables import Events
@@ -16,12 +17,7 @@ class EventWS:
 class MonitoringEventDAO:
 
     # connection to database
-    def __init__(self, inMemory):
-        #if inMemory:
-        #   self.conn = sqlite3.connect(':memory:', check_same_thread=False)
-        #else:
-        #   self.conn = sqlite3.connect('monitoring.db', check_same_thread=False)
-
+    def __init__(self):
         self.conn = sqlite3.connect('monitoring.db', check_same_thread=False)   # getting connection to database
 
         # easier to access a dictionary - { "1" , "txt" } vs {"id":"1", "description":"txt"}
@@ -35,7 +31,6 @@ class MonitoringEventDAO:
         self.c.execute("""CREATE TABLE IF NOT EXISTS event (
                      id INTEGER PRIMARY KEY,
                      eventID text,
-                     ws text,
                      senderID text,
                      payload text,
                      serverTime timestamp
@@ -53,8 +48,8 @@ class MonitoringEventDAO:
             self.lock.acquire(True)
 
             #SQL statement - id = NULL, eventID - from rquist... possible to put string together
-            self.c.execute("""INSERT INTO event VALUES (NULL, :eventID, :ws, :senderID, :payload, :serverTime)""",
-                           {'eventID': event["eventID"], 'ws': event["ws"], 'senderID': event['senderID'],
+            self.c.execute("""INSERT INTO event VALUES (NULL, :eventID, :senderID, :payload, :serverTime)""",
+                           {'eventID': event["eventID"], 'senderID': event['senderID'],
                             'payload': payload, 'serverTime': event["serverTime"]})
 
             self.lock.release()
@@ -78,22 +73,14 @@ class MonitoringEventDAO:
 
         return events
 
-    # if I need current event = last event
-    def getLastEvent(self, event: Events):
+    def getNewerEvents(self, timestamp):
+        date = datetime.fromtimestamp((int(timestamp) / 1000) - 3600)
         self.lock.acquire(True)
-
-        # take all events and put them to order
-        self.c.execute("SELECT * FROM event WHERE eventID = :eventID ORDER BY serverTime DESC LIMIT 1",
-                       {"eventID": str(event.value)})
-        eventDict = self.c.fetchone() # same like fetchall, but I will get just one last
-
+        self.c.execute("""SELECT * FROM event WHERE event.serverTime > :timestamp""", {'timestamp': date })
+        events = self.c.fetchall()
         self.lock.release()
 
-        if eventDict is None:
-            return None
-
-        return EventWS(eventDict["id"], eventDict["eventID"], eventDict["ws"], eventDict["senderID"],
-                       eventDict["payload"], eventDict["serverTime"])
+        return events
 
 
 

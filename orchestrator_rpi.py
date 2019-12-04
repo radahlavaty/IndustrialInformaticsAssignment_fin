@@ -108,8 +108,6 @@ class Orchestrator:
             pallet.status = PalletStatus.MOVING_TO_Z2
             self.ws.conveyor.movePallet(Zone.Z1, Zone.Z2)
             return
-        if len(self.bufferOrder) == 0:
-            return
         if not self.testIfZoneFree(Zone.Z4) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z4):
             print("Orchestrator object: move pallet from zone 1 to zone 4")
             pallet.status = PalletStatus.MOVING_TO_Z4
@@ -121,10 +119,11 @@ class Orchestrator:
         pallet = self.getPalletFromZone(Zone.Z2)
         if pallet.status == PalletStatus.MOVING_TO_Z3:
             return
-        if pallet.status == PalletStatus.WAITING and not self.testIfZoneFree(Zone.Z3):
+        elif pallet.status == PalletStatus.WAITING and not self.testIfZoneFree(Zone.Z3):
             print("Orchestrator object: move pallet from zone 2 to zone 3")
             self.ws.conveyor.movePallet(Zone.Z2, Zone.Z3)
             pallet.status = PalletStatus.MOVING_TO_Z3
+
 
     def testZone3(self):
         if not self.testIfZoneFree(Zone.Z3):
@@ -159,10 +158,6 @@ class Orchestrator:
         if not self.testIfZoneFree(Zone.Z5) and not self.testIfPalletWithStatusExist(PalletStatus.MOVING_TO_Z5):
             pallet.status = PalletStatus.MOVING_TO_Z5
             self.ws.conveyor.movePallet(Zone.Z4, Zone.Z5)
-
-    def testZone5(self):
-        if not self.testIfZoneFree(Zone.Z5):
-            return
 
     def printPalletInfo(self):
         print("Pallets: ")
