@@ -20,7 +20,7 @@ class Subscriber:
                 "Subscriber object: subscribe to Zone " + str(zone.value) + ", IP: " + hostIP + " Status Code: " + str(
                     rqst.status_code))
         else:
-            print("Subscriber object: subscribe to Zone " + str(zone.value) + "SUCCESS")
+            print("Subscriber object: subscribe to Zone " + str(zone.value) + " SUCCESS")
 
     def subscribeToPenChangeStart(self, hostIP, endpoint):
         URL = hostIP + self.port + self.baseService + "/PenChangeStarted/notifs"
@@ -68,16 +68,11 @@ class Subscriber:
 
     def subscribeToAllEventsOfWS(self, ws: Workstation):
         self.subscribeToDrawingEnd(ws.baseIp + ".1", "/rest/events/DrawEndExecution")
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z1,
-                                   "/rest/events/Z1_Changed")
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z2,
-                                   "/rest/events/Z2_Changed")
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z3,
-                                   "/rest/events/Z3_Changed")
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z4,
-                                   "/rest/events/Z4_Changed")
-        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z5,
-                                   "/rest/events/Z5_Changed")
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z1, "/rest/events/Z1_Changed")
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z2, "/rest/events/Z2_Changed")
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z3, "/rest/events/Z3_Changed")
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z4, "/rest/events/Z4_Changed")
+        self.subscribeToZoneChange(ws.baseIp + ".2", Zone.Z5, "/rest/events/Z5_Changed")
 
     def subscribeToAllEventsOfWsSimple(self, ws: Workstation):
         endpointName = "/event"

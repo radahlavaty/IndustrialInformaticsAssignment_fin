@@ -1,6 +1,7 @@
-# Industrial Informatics Assignment - Tampere University
+# Industrial Informatics Assignment - Tampere University, 2019
 
-Orchestration and monitoring of industrial equipment 
+This assignment is about controlling orchestrator and robot which is making mobiles. 
+We are also monitoring events and showing data which are happening on local web. 
 
 
 ## Orchestrator
@@ -25,7 +26,8 @@ Orchestration and monitoring of industrial equipment
 
 ## Monitoring Server
 
-
+- Building database for saving data of events
+- Possibility of showing events from exact day
 
 
 
